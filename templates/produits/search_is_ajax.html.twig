@@ -1,0 +1,27 @@
+{% if stringSaisie is not empty %}
+    <h5 class="mb-4 successAlerto">
+        <strong>{{ nbSearch }}</strong>
+        produit{{ (nbSearch > 1) ? 's' : '' }}
+        correspond{{ (nbSearch > 1) ? 'ent' : '' }}
+        à
+        <span class="alerto">"{{ stringSaisie }}"</span>
+    </h5>
+{% endif %}
+
+{% for produit in produits %}
+    <div class="row">
+        <div class="col-4 autompleteImg mb-3">
+            {% for image in produit.image %}
+                {% if loop.first %}
+                    <a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}"><img src="{{ asset('images/produits/') ~ image.imageName }}" alt="{{ produit.titre }}" class="img-fluid">
+                {% endif %}
+            {% endfor %}
+            </a>
+        </div>
+        <div class="col-8 title autompleteTitle">
+            <a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}">
+                {{ produit.titre | striptags | truncate(50,true) | raw }}
+            </a>
+        </div>
+    </div>
+{% endfor %}

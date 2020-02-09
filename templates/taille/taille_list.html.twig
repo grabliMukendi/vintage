@@ -1,0 +1,9 @@
+{% for taille in tailles %}
+
+	<div class="js-filterTai">
+		<a href="{{ path('taille_produits', { 'size' : taille.nom }) }}" class="list-group-item list-group-item-action filtreF">
+			{{ taille.nom | capitalize }}
+		</a>
+	</div>
+
+{% endfor %}

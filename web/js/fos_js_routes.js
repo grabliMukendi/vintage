@@ -1,0 +1,1 @@
+fos.Router.setData({"base_url":"","routes":{"image":{"tokens":[["text","\/image"]],"defaults":[],"requirements":[],"hosttokens":[],"methods":["POST"],"schemes":[]}},"prefix":"","host":"localhost","port":"","scheme":"http","locale":[]});

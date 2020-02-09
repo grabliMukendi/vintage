@@ -1,0 +1,23 @@
+
+
+{% if user.civilite == 'f' and user.userAdress.avatar == 'default_avatar' %}
+<span class="smAvatar2">
+    <div class="smAvatarSpan">
+        <img src="{{ asset('photo/woman.svg') }}" alt="{{ user.prenom }}" class="img-fluid">
+    </div>
+</span>
+{% endif %}
+{% if user.civilite == 'm' and user.userAdress.avatar == 'default_avatar' %}
+<span class="smAvatar2">
+    <div class="smAvatarSpan">
+        <img src="{{ asset('photo/man.svg') }}" alt="{{ user.prenom }}" class="img-fluid">
+    </div>
+</span>
+{% endif %}
+{% if user.userAdress.avatar != 'default_avatar' %}
+    <span class="smAvatar">
+        <div class="smAvatarSpan">
+            <img src="{{ asset('images/avatars/') ~ user.userAdress.avatar }}" alt="{{ user.prenom }}" class="img-fluid">
+        </div>
+    </span>
+{% endif %}

@@ -1,0 +1,311 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Profile' %}
+
+{% block content %}
+
+{% if app.user %}
+    
+    <div class="row">
+        <div class="col-md-3 profileLeft">
+            <a class="{{ (title == 'Liste des commandes') ? 'profileActiveLead' : '' }}" href="{{ path('commandes_list') }}">Mes commandes <i class="fas fa-angle-down float-right angleDP"></i></a>
+            <a class="{{ (title == 'Liste des factures') ? 'profileActiveLead' : '' }}" href="{{ path('factures_list') }}">Mes factures <i class="fas fa-angle-down float-right angleDP"></i></a>
+            <a class="{{ (title == 'Profile') ? 'profileActiveLead' : '' }}" href="{{ path('user_profile') }}">Mon Compte <i class="fas fa-angle-down float-right angleDP"></i></a>
+            <ul>
+                <li><a href="{{ path('user_infos_perso') }}">Informations personnelles</a></li>
+                <li><a href="{{ path('user_reset_address') }}">Mes coordonnées</a></li>
+                <li><a href="{{ path('user_reset_email') }}">Email</a></li>
+                <li><a href="{{ path('reset_password') }}">Mot de passe</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <h1 class="headerOneColor">Mon Compte</h1>
+            <p class="mb-4">Retrouvez et mettez à jour ici toutes vos informations personnelles.</p>
+            
+            <h2 class="headerTwoProfile">MON PROFIL</h2>
+            <div class="infosUser">
+                <div class="tableBloc1">
+                    <strong>Informations personnelles</strong>
+                </div>
+                <div class="tableBloc2 text-center">
+                    {{ (user.civilite == 'm') ? 'Monsieur' : 'Madame' }} {{ user.prenom }} {{ user.nom }}
+                </div>
+                <div class="tableBloc3">
+                    <p>Né(e) le : 
+                        {% if user.userAdress is empty %}
+                        <span class="userResult">
+                            {{ 'Non renseigné' }}
+                        </span>
+                        {% elseif user.userAdress is not empty and user.userAdress.birthday is empty %}
+                        <span class="userResult">
+                            {{ 'Non renseigné' }}
+                        </span>
+                        {% else %}
+                        {{ user.userAdress.birthday | date('d/m/Y') }}
+                        {% endif %} 
+                    </p>
+                    <p>Profession : 
+                        {% if user.userAdress is empty %}
+                            <span class="userResult">
+                                {{ 'Non renseigné' }}
+                            </span>
+                        {% elseif user.userAdress is not empty and user.userAdress.profession is empty %}
+                            <span class="userResult">
+                                {{ 'Non renseigné' }}
+                            </span>
+                        {% else %}
+                            {{ user.userAdress.profession | capitalize }}
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="tableBloc4 text-right">
+                    <a href="{{ path('user_infos_perso') }}">
+                        <i class="icon-edit"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="infosUser">
+                <div class="tableBloc1Bis">
+                    <strong>Mes coordonnées</strong>
+                </div>
+                <div class="tableBloc2Bis text-center">
+                    Addresse :
+                    {% if user.userAdress is empty %}
+                    <span class="userResult">
+                        {{ 'Non renseigné' }}
+                    </span>
+                    {% elseif user.userAdress is not empty and user.userAdress.adresse is empty %}
+                    <span class="userResult">
+                        {{ 'Non renseigné' }}
+                    </span>
+                    {% else %}
+                    {{ user.userAdress.adresse }}
+                    {% endif %}
+                </div>
+                <div class="tableBloc3">
+                    <p>Téléphone : 
+                        {% if user.userAdress is empty %}
+                        <span class="userResult">
+                            {{ 'Non renseigné' }}
+                        </span>
+                        {% elseif user.userAdress is not empty and user.userAdress.telephone is empty %}
+                        <span class="userResult">
+                            {{ 'Non renseigné' }}
+                        </span>
+                        {% else %}
+                        {{ user.userAdress.telephone }}
+                        {% endif %}
+                    </p>
+                    <p>Ville : 
+                        {% if user.userAdress is empty %}
+                        <span class="userResult">
+                            {{ 'Non renseigné' }}
+                        </span>
+                        {% elseif user.userAdress is not empty and user.userAdress.ville is empty %}
+                        <span class="userResult">
+                            {{ 'Non renseigné' }}
+                        </span>
+                        {% else %}
+                        {{ user.userAdress.ville }}
+                        {% endif %}
+                    </p>
+                    <p>Pays : 
+                        {% if user.userAdress is empty %}
+                        <span class="userResult">
+                            {{ 'Non renseigné' }}
+                        </span>
+                        {% elseif user.userAdress is not empty and user.userAdress.pays is empty %}
+                        <span class="userResult">
+                            {{ 'Non renseigné' }}
+                        </span>
+                        {% else %}
+                        {{ user.userAdress.pays }}
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="tableBloc4 text-right">
+                    <a href="{{ path('user_reset_address') }}">
+                        <i class="icon-edit"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="infosUser">
+                <div class="tableBloc1Bis">
+                    <strong>Email</strong>
+                </div>
+                <div class="tableBloc3Bis">
+                    {{ user.email }}
+                </div>
+                <div class="tableBloc4 text-right">
+                    <a href="{{ path('user_reset_email') }}">
+                        <i class="icon-edit"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="infosUser">
+                <div class="tableBloc1Bis">
+                    <strong>Mot de passe</strong>
+                </div>
+                <div class="tableBloc3Bis iconPadlock">
+                    * * * * * * * * * * * * * * * * * * * * <i class="icon-padlock"></i>
+                </div>
+                <div class="tableBloc4 text-right">
+                    <a href="{{ path('reset_password') }}">
+                        <i class="icon-edit"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!--h2 class="headerTwoProfile">Mes informations personnelles</h2>
+            <div class="infosPerso">
+                {#% if user.userAdress is empty and user.civilite == 'm' %#}
+                    
+                    <div class="avatar">
+                        <label for="profil_userAdress_imageFile_file">
+                            <div class="editAvatar">
+                                <i class="icon-edit"></i>
+                            </div>
+                        </label>
+                        <div class="blockFile">
+                            <div class="cropImg">
+                                <img src="{#{ asset('photo/man.svg') }}" alt="{{ user.prenom }#}" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+
+                {#% endif %#}
+                {#% if user.userAdress is empty and user.civilite == 'f' %#}
+                    
+                    <div class="avatar">
+                        <label for="profil_userAdress_imageFile_file">
+                            <div class="editAvatar">
+                                <i class="icon-edit"></i>
+                            </div>
+                        </label>
+                        <div class="blockFile">
+                            <div class="cropImg">
+                                <img src="{#{ asset('photo/woman.svg') }}" alt="{{ user.prenom }#}" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+
+                {#% endif %#}
+
+                {#% if user.userAdress is not empty and user.civilite == 'm' and user.userAdress.avatar is null %#}
+                <div class="avatar">
+                    <label for="profil_userAdress_imageFile_file">
+                        <div class="editAvatar">
+                            <i class="icon-edit"></i>
+                        </div>
+                    </label>
+                    <div class="blockFile">
+                        <div class="cropImg">
+                            <img src="{#{ asset('photo/man.svg') }}" alt="{{ user.prenom }#}" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+                {#% endif %#}
+                {#% if user.userAdress is not empty and user.civilite == 'f' and user.userAdress.avatar is null %#}
+                <div class="avatar">
+                    <label for="profil_userAdress_imageFile_file">
+                        <div class="editAvatar">
+                            <i class="icon-edit"></i>
+                        </div>
+                    </label>
+                    <div class="blockFile">
+                        <div class="cropImg">
+                            <img src="{#{ asset('photo/woman.svg') }}" alt="{{ user.prenom }#}" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+                {#% endif %#}
+                {#% if user.userAdress is not empty and user.userAdress.avatar != null %#}
+                    
+                    <div class="avatar">
+                        <label for="profil_userAdress_imageFile_file">
+                            <div class="editAvatar">
+                                <i class="icon-edit"></i>
+                            </div>
+                        </label>
+                        <div class="blockFile">
+                            <div class="cropImg">
+                                <img src="{#{ asset('images/produits/') ~ user.userAdress.avatar }}" alt="{{ user.prenom }#}" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+
+                {#% endif %#}
+
+                {#{ form_start(form) }#}
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {#{ form_row(form.civilite, { 'label' : 'Civilité' }) }#}
+                    </div>
+                    <div class="col-md-8">
+                        {#{ form_row(form.username, { 'label' : 'Pseudo' }) }#}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {#{ form_row(form.nom, { 'label' : 'Nom' }) }}
+                    </div>
+                    <div class="col-md-6">
+                            {#{ form_row(form.prenom, { 'label' : 'Prénom' }) }#}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-7">
+                            {#{ form_row(form.email, { 'label' : 'Email' }) }#}
+                        </div>
+                    <div class="col-md-5">
+                        {#{ form_row(form.userAdress.profession, { 'label' : 'Profession' }) }#}
+                    </div>
+                </div>
+                    
+                    <div class="row">
+                        <div class="col-md-5">
+                            {#{ form_row(form.userAdress.birthday, { 'label' : 'Né(e) le' }) }#}
+                        </div>
+                        <div class="col-md-4">
+                            {#{ form_row(form.userAdress.telephone, { 'label' : 'Téléphone' }) }#}
+                        </div>
+                        <div class="col-md-3">
+                            {#{ form_row(form.userAdress.codePostal, { 'label' : 'Code postal' }) }#}
+                        </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {#{ form_row(form.userAdress.pays, { 'label' : 'Pays' }) }}
+                    </div>
+                    <div class="col-md-6">
+                        {#{ form_row(form.userAdress.ville, { 'label' : 'Ville' }) }}
+                    </div>
+                </div>
+
+                {#{ form_row(form.userAdress.complement) }#}
+                {#{ form_widget(form.userAdress.imageFile) }#}
+                
+                {#{ form_row(form.password, { 'attr' : { 'value' : user.password } }) }#}
+                
+                {#{ form_row(form.userAdress.nom, { 'attr' : { 'value' : user.nom } }) }#}
+                {#{ form_row(form.userAdress.prenom, { 'attr' : { 'value' : user.prenom } }) }#}
+                {#{ form_rest(form) }#}
+
+                <button type="submit" class="btn btnSubmit">Enregistrer</button>
+
+                {#{ form_end(form) }#}
+            </div-->
+
+        </div>
+    </div>
+
+{% endif %}
+
+{% endblock %}

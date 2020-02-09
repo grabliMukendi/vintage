@@ -1,0 +1,85 @@
+{% extends 'admin/base.html.twig' %}
+
+{% set title = 'Ajout et modification du produit' %}
+
+{% block content %}
+
+	<div class="row">
+		<h3 class="leadTitleLeft2 col-md-8">Gestion des produits</h3>
+		<div class="col-md-4">
+			<a class="btn btnSubmit col-12" href="{{ path('produit_add') }}">Ajouter un produit</a>
+		</div>
+	</div><br><br>
+	{% if produits is not empty %}
+		<table class="table table-responsive">
+			<thead>
+				<tr>
+					<th>Photo</th>
+					<!--th>Référence</th-->
+					<th>Catégorie</th>
+					<th>Titre</th>
+					<th>Description</th>
+					<th>Couleur</th>
+					<th>Taille</th>
+					<th>Public</th>
+					<th>Prix</th>
+					<th>Stock</th>
+					<th colspan="2">Action</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for produit in produits.data %}
+					<tr>
+						<td>
+							{% for image in produit.image %}
+								{% if loop.first %}
+								<div class="mb-2 imgCropList">
+									<img src="{{ asset('images/produits/' ~ image) }}" alt="{{ produit.titre }}" width="140">
+								</div>
+								{% endif %}	
+							{% endfor %}
+							<a class="wiewOtherPhotos" href="{{ path('other_photos', { 'id' : produit.id }) }}">Voir les autres photos</a>
+						</td>
+						<td>{{ produit.categorie | capitalize }}</td>
+						<td>{{ produit.titre | capitalize| striptags | truncate(30,true) }}</td>
+						<td>{{ produit.description | striptags | truncate(50,true) | raw }}</td>
+						<td>{{ produit.couleur | capitalize }}</td>
+						<td>{{ produit.taille | capitalize }}</td>
+
+						{% if produit.public == 'm' %}
+							<td>Homme</td>
+						{% elseif produit.public == 'f' %}
+							<td>Femme</td>
+						{% else %}
+							<td>Mixte</td>
+						{% endif %}
+
+						<td>{{ produit.prix | number_format(2, ',', ' ') }}€</td>
+						<td>{{ produit.disponible }}</td>
+
+						<td>
+							<a href="{{ path('produit_update', { id : produit.id }) }}">
+								<i class="icon-edit"></i>
+							</a>
+						</td>
+						<td>
+							<a class="confirm" href="{{ path('produit_delete', { id : produit.id }) }}">
+								<i class="icon-garbage"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+
+			</tbody>
+		</table>
+	{% else %}
+		<div class="alert alert-danger">
+			<strong>Désolé !</strong>
+			Il n'existe aucun produit pour l'instant. Veuillez en ajouter.</div>
+	{% endif %}
+
+	{{ produits.display }}
+
+
+{% endblock %}

@@ -1,0 +1,7 @@
+{% for produit in produits %}
+    <div class="js-filterCat">
+        <a href="{{ path('categorie_tendance_products', { 'cat' : produit.categorie.nom, 'rubrique' : produit.rubrique }) }}" class="cat">
+            {{ produit.categorie.nom | capitalize }}
+        </a>
+    </div>
+{% endfor %}

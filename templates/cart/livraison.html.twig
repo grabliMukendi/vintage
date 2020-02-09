@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Livraison' %}
+
+{% block content %}
+
+<div class="retour">
+    <div class="returned"><a href="{{ path('cart_index') }}">Retour</a></div>
+    <div></div>
+    <div></div>
+</div><br>
+
+<h2 class="leadTitleLeft">Livraison</h2><br><br>
+<div class="row">
+    <div class="col-md-6">
+        {% if user.userAdress | length != 0 and user.userAdress.adresse != null and user.userAdress.codePostal != null and user.userAdress.pays != null %}
+            <form action="{{ path('cart_validation') }}" mathod="post">
+                <h5 class="mb-4">Adresse de livraison et de facturation</h5>
+                <div class="form-group">
+                    <div class="form-group livraisonValidate">
+                        <input name="livraison" id="adresseLivraison" type="radio" value="{{ user.userAdress.id }}" checked class="mr-1 ml-1">
+                        <label for="adresseLivraison">{{ user.userAdress.adresse }}, {{ user.userAdress.codePostal }}, {{ user.userAdress.ville != user.userAdress.pays ? user.userAdress.ville ~ ',' : '' }} {{ user.userAdress.pays }} <a class="ml-1 confirmLivraisonDel" href="{{ path('adresse_delete', { id : user.userAdress.id }) }}">
+                            <i class="icon-garbage"></i>
+                        </a></label>
+                        <h6 class="ml-4">{{ user.userAdress.prenom }} {{ user.userAdress.nom }}</h6>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btnSubmit">Valider mon adresse</button>
+                </div>
+            </form>
+        {% else %}
+            <div class="alert alert-danger text-center"><img class="mr-2 mb-2" src="{{ asset('photo/crying.svg') }}" alt="baby crying" width="64"><br> Aïe !!! Aucune adresse de livraison et de facturation. Veuillez en ajouter.</div>
+        {% endif %}
+
+    </div>
+    <div class="col-md-6">
+        <h5 class="mb-4">{{ (user.userAdress is empty or user.userAdress.adresse == null) ? 'Ajouter' : 'Modifier' }} mon adresse</h5 class="mb-4">
+        {{ form_start(form) }}
+            {{ form_row(form.nom, { 'attr' : { 'value' : (user.userAdress is empty or user.userAdress.adresse == null) ? user.nom : '' } }) }}
+            {{ form_row(form.prenom, { 'attr' : { 'value' : (user.userAdress is empty or user.userAdress.adresse == null) ? user.prenom : '' } }) }}
+            {{ form_row(form.adresse) }}
+            {{ form_row(form.codePostal) }}
+            {{ form_row(form.pays) }}
+            {{ form_row(form.ville) }}
+            {{ form_row(form.complement) }}
+        <div class="hiddenInfosPerso">
+            {{ form_rest(form) }}
+        </div>
+        <div class="col-md-6 mx-auto text-center mt-4">
+            <button type="submit" class="btn btnSubmit col-12">{{ (user.userAdress is empty or user.userAdress.adresse == null) ? 'Ajouter' : 'Modifier' }}</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+
+{% endblock %}

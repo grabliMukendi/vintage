@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Panier' %}
+
+{% block content %}
+
+{% set totalTTC = 0 %}
+{% set refTva = {} %}
+
+{% for item in items %}
+	{% set totalTTC = total | tva(item.produit.tva.multiplicate) %}
+{% endfor %}
+
+{% for item in items %}
+	{% set refTva = refTva | merge({ (item.produit.tva.valeur ~ '%') : (item.produit.prix * item.quantite) | montantTva(item.produit.tva.valeur) | number_format(2, ',', ' ') }) %}
+{% endfor %}
+
+{#{ dump(refTva) }#}
+
+	<h3 class="leadTitleLeft">Mon panier</h3><br><br>
+	{% if items | length > 0 %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="align-top text-center">Article(s)</th>
+					<th class="align-top text-center">Prix unitaire</th>
+					<th class="align-top text-center">Quantité</th>
+					<th class="align-top text-center">Prix total</th>
+					<th class="align-top text-center">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in items %}
+					{% set prixTotal = item.produit.prix * item.quantite %}
+					<tr>
+						<td class="align-middle" width="300">
+							<div class="cartImg float-left">
+								{% for image in item.produit.image %}
+									{% if loop.first %}
+										<img src="{{ asset('images/produits/') ~ image.imageName }}" alt="{{ item.produit.titre }}" class="img-fluid">
+									{% endif %}
+								{% endfor %}
+							</div>
+							<div class="cartTitle float-right">{{ item.produit.titre }}</div>
+						</td>
+						<td class="text-center align-middle">{{ item.produit.prix | number_format(2, ',', ' ') }}</td>
+						<td class="text-center align-middle">
+							<span class="quantity">{{ item.quantite }}</span>
+							<span class="quantityQuare">
+								<a href="{{ path('cart_add', { 'id' : item.produit.id }) }}">
+									<i class="icon-add-1 mr-1"></i>
+								</a>
+								<a href="{{ path('cart_subtracted', { 'id' : item.produit.id }) }}">
+									<i class="icon-remove-1 ml-1"></i>
+								</a>
+							</span>
+						</td>
+						<td class="text-center align-middle">{{ prixTotal | number_format(2, ',', ' ') }}</td>
+						<td class="text-center align-middle delCartBtn">
+							<a href="{{ path('cart_remove', { 'id' : item.produit.id }) }}">
+								<i class="icon-cancel-copie"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3" class="title text-right">Montant Total HT</td>
+					<td class="text-center titleColor">{{ total | number_format(2, ',', ' ') }}
+						€</td>
+					<td></td>
+				</tr>
+				{% for key, tva in refTva %}
+					<tr>
+						<td colspan="3" class="title text-right">TVA {{ key }} : </td>
+						<td class="text-center titleColor">{{ tva }}
+							€</td>
+						<td></td>
+					</tr>
+				{% endfor %}
+				<tr class="tableSecondary">
+					<td colspan="3" class="titleLead text-right">Montant Total TTC</td>
+					<td class="text-center titleLeadColor">{{ totalTTC | number_format(2, ',', ' ') }}
+						€</td>
+					<td></td>
+				</tr>
+			</tfoot>
+		</table>
+		<div class="mt-4">
+			<a class="btn btnSubmitRegular" href="{{ path('home') }}">Continuer le shopping</a>
+			<a class="btn btnSubmit float-right" href="{{ path('cart_livraison') }}">Valider mon panier</a>
+		</div>
+	{% else %}
+		<div class="alert alert-danger">
+			<strong>Désolé !</strong>
+			Votre panier est actuellement vide. Vous n'avez aucune commande en cours.</div>
+	{% endif %}
+
+{% endblock %}

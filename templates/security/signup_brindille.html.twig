@@ -1,0 +1,85 @@
+{% apply inline_css %}
+
+<style>
+
+    h1 {
+        color: #3F3D56;
+        font-size: 32px;
+        text-align: center;
+    }
+    .mailBlock {
+        width: 70%;
+        margin: 1em auto;
+        border-style: solid;
+        border-width: thin;
+        border-color: #dadce0;
+        border-radius: 8px;
+        padding: 40px 20px;
+    }
+    .subjectMail {
+        font-size: 20px;
+        line-height: 32px;
+        text-align: center;
+        word-break: break-word;
+    }
+    .mailhead {
+        border-bottom: solid thin #dadce0;
+        margin-bottom: 1em;
+    }
+    .email {
+       font-size: 20px;
+    }
+    .img {
+       margin: 0 auto 2em auto;
+    }
+    .centrer {
+       text-align: center;
+    }
+    .button {
+       border-radius: 5px;
+       padding: 8px 16px;
+       margin: 1em auto;
+       display: block;
+       text-transform: uppercase;
+       letter-spacing: 0.6px;
+       background-color: #DF4949;
+       color: #fff;
+    }
+    .button:hover {
+       background-color: rgb(180, 59, 59);
+    }
+    i {
+        margin-right: 8px;
+    }
+    p, a {
+        text-align: center;
+    }
+    p img {
+        margin-right: 8px;
+    }
+
+</style>
+    <div class="mailBlock">
+        <div class="mailhead">
+            <div class="centrer img">
+                <img class="centrer" src="{{ email.image('@images/logo_vintage.svg') }}" alt="Logo Vintage" width="160">
+            </div>
+            <h1> {{ (civilite == 'm') ? 'Bienvenu ' ~ username : 'Bienvenue ' ~ username }} !</h1>
+            
+            <p class="subjectMail">
+                Vous vous êtes inscrit sur Vintage avec l'email :
+            </p>
+            {% if civilite == 'm' %}
+                <p><img src="{{ email.image('@images/man.svg') }}" alt="icon man" width="32">{{ email.to[0].address }}</p>
+            {% else %}
+                <p class="email"><img src="{{ email.image('@images/woman.svg') }}" alt="icon woman" width="32">{{ email.to[0].address }}</p>
+            {% endif %}
+        </div>
+
+        <p>
+            <a class="button" href="#">Veuillez cliquer sur ce lien pour activer votre compte</a>
+            (ce lien est valable jusqu'au {{ expiration_date | date('F jS') }})
+        </p>
+    </div>
+
+{% endapply %}

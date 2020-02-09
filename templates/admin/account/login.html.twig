@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,600,600i,700,700i,900,900i&display=swap"
+        rel="stylesheet">
+    <!-- Ico-moon Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('css/icomoon/style.css') }}">
+    <!-- Personal Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <title>Connexion de l'administrateur</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+        }
+        .register {
+            border: 1px solid #ced4da;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="col-md-4 register bg-light">
+        {% if hasError %}
+            <div class="alert alert-danger"><strong>Désolé !</strong> Erreur sur les identifiants.</div>
+        {% endif %}
+        <h4 class="text-center leadTitle">Connexion pour administrateur</h4><br><br>
+        <form method="post" id="connectForm">
+            <div class="form-group">
+                <input type="text" name="_username" id="username" class="form-control" placeholder="Nom d'utilisateur *"
+                    value="{{ username }}">
+            </div>
+            <div class="form-group">
+                <input type="password" name="_password" id="password" class="form-control" placeholder="Mot de passe *">
+            </div>
+            <div class="form-group text-center mt-4">
+                <button type="submit" class="btn btnSubmit col"><i class="icon-padlock mr-1"></i> Se connecter</button>
+            </div>
+        </form><br>
+    </div>
+
+</body>
+</html>

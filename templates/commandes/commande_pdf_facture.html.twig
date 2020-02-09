@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <!--base href="http://127.0.0.1:8001"-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% set livraison = facture.commande.livraison %}
+    <title>Facture n° {{ facture.reference < 10 ? '0' ~ facture.reference : '' }} de {{ livraison != null ? livraison.prenom | capitalize ~ ' ' ~ livraison.nom | upper : '' }}</title>
+
+    <style>
+        body 
+        {
+            font-family: 'Montserrat', sans-serif;
+            color: rgb(55, 57, 66);
+            padding-top: calc(79.52px + 56px);
+        }
+        th {
+            text-align: inherit;
+        }
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            border-collapse: collapse;
+            color: #212529;
+        }
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .table tbody + tbody {
+            border-top: 2px solid #dee2e6;
+        }
+        .text-left {
+            text-align: left !important;
+        }
+        .text-right {
+            text-align: right !important;
+        }
+        .text-center {
+            text-align: center !important;
+        }
+        .title {
+            font-weight: bolder;
+        }
+        .text-danger {
+            color: #DF4949 !important;
+        }
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+        }
+        .btn-sm, .btn-group-sm > .btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            border-radius: 0.2rem;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+        ul li {
+            list-style: none;
+        }
+        .ligne1Content {
+            background-color:#DF4949;
+        }
+        .ttc {
+            color:#DF4949;
+            font-weight: bold;
+        }
+        span {
+            font-size: 14px;
+            font-weight: bold;
+            color:#DF4949;
+        }
+        h1 {
+            font-size: 2em;
+            letter-spacing: 1.5px;
+            color: #68727c !important;
+        }
+        h1, h2, h3 {
+            color:#DF4949;
+        }
+        .titleFacture {
+            font-size: 1.35em !important;
+        }
+        .facRef {
+            color: inherit !important;
+            font-weight: normal !important;
+        }
+        .smBtn {
+            color: #fff;
+            font-weight: bolder;
+            background-color: #3FBFB2 !important;
+            border: none !important;
+        }
+        .reloadFacture {
+            color: #3FBFB2 !important;
+        }
+        .smBtnDanger {
+            color: #fff;
+            font-weight: bolder;
+            background-color: #DF4949 !important;
+            border: none !important;
+        }
+        .factureConditions {
+            padding: 1em;
+            font-size: 0.8em;
+            background-color: #dee2e6;
+        }
+        .totalTTC {
+            font-size: 1.25em;
+        }
+    </style>
+</head>
+<body>
+    <page backtop="0mm" backright="10mm" backbottom="20mm" backleft="10mm">
+    
+        <table class="table">
+            <tr>
+                <td colspan="2" class="text-center">
+                    <img src="https://scontent.farn1-1.fna.fbcdn.net/v/t1.0-9/81252630_2710354099003043_2435603261240115200_o.jpg?_nc_cat=102&_nc_ohc=qD3mxgBO190AQluP9lehg2YGhqtm_tIcKVwVW0ylOCJZKWViCo1P9GF3A&_nc_ht=scontent.farn1-1.fna&oh=7e94cdfdef6590c62365bc0697421040&oe=5E978102" alt="Logo Vintage" width="240">
+                    <h1 class="text-left">Détails de la facture</h1>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-left">
+                    <span>DE</span>
+                    <br />
+                    <ul>
+                        <li class="title">Vintage</li>
+                        <li>12, Rue du Général de Gaulle</li>
+                        <li>95520 - Osny</li>
+                        <li>France</li>
+                        <li>Numéro de TVA : FR68752925594</li>
+                    </ul>
+                </td>
+                <td class="text-right">
+                    <span class="titleFacture">FACTURE N° :</span>
+                    <span class="titleFacture facRef">{{ facture.reference < 10 ? '0' ~ facture.reference : '' }}</span>
+                    <br />
+                    <br />
+                    <span>DATE : </span>
+                    {{ facture.date ? facture.date | date('d/m/Y à H:i') : '' }}
+                </td>
+            </tr>
+            <tr>
+                <td class="text-left">
+                    <br />
+                    <span>FACTURÉ À</span>
+                    <br />
+                    {% set livraison = facture.commande.livraison %}
+                    {% if livraison != null %}
+                        {{ livraison.prenom }} {{ livraison.nom | upper }} <br>
+                        {{ livraison.adresse }} <br>
+                        {{ livraison.codePostal }} - {{ livraison.ville }} <br>
+                        {{ livraison.pays }} <br>
+                    {% endif %}
+                </td>
+                <td class="text-right"></td>
+            </tr>
+        </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-left">
+                        Désignation
+                    </th>
+                    <th>
+                        Quantité
+                    </th>
+                    <th>
+                        Prix HT
+                    </th>
+                    <th>
+                        Statut
+                    </th>
+                    <th>
+                        Total HT
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in facture.commande.produit %}
+                <tr>
+                    <td class="text-left">
+                        {{ item.reference }}
+                    </td>
+                    <td class="text-center">
+                        {{ item.quantite }}
+                    </td>
+                    <td class="text-center">
+                        {{ item.prixHT | number_format(2, ',', ' ') }} €
+                    </td>
+                    <td class="text-center">
+                        {% if facture.valider != true %}
+                        <div class="btn btn-danger btn-sm smBtnDanger">{{ 'En cours' }}</div>
+                        {% else %}
+                        <div class="btn btn-success btn-sm smBtn">{{ 'Payé' }}</div>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {{ (item.quantite * item.prixHT) | number_format(2, ',', ' ') }} €
+                    </td>
+                </tr>
+                {% endfor %}
+    
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-right title">
+                        TOTAL HT
+                    </td>
+                    <td class="text-center title">
+                        {{ facture.commande.totalHT | number_format(2, ',', ' ') }} €
+                    </td>
+                </tr>
+                {% for key, item in facture.commande.tva %}
+                <tr>
+                    <td colspan="4" class="text-right title">
+                        TVA à {{ key }}
+                    </td>
+                    <td colspan="4" class="text-center title">
+                        {{ item | number_format(2, ',', '') }} €
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="4" class="text-right">
+                        <h4 class="title text-danger totalTTC">TOTAL TTC À PAYER</h4>
+                    </td>
+                    <td class="text-center">
+                        <h4 class="title text-danger totalTTC">{{ facture.commande.totalTTC | number_format(2, ',', ' ') }} €</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="factureConditions">
+                        CONDITIONS ET MOYENS DE PAIEMENT :
+                        Les factures seront payables en Euros à réception et au plus tard dans un délai de 45 jours fin de
+                        mois ou 60 jours à
+                        compter de leur date d’émission.
+    
+                        Tout retard de paiement entraînera l’exigibilité de pénalités de retard à un taux égal à
+                        trois fois le taux d’intérêt légal en vigueur en France et d’une indemnité forfaitaire minimale de
+                        40 (quarante) euros
+                        pour frais de recouvrement, dues de plein droit, sans qu'un rappel soit nécessaire.
+                    </td>
+                </tr>
+            </tfoot>
+    
+        </table>
+    </page>
+    <!--div>
+        Btw, j'ai réussi à mettre en place un environnement de développement avec un serveur embarqué qui vient de lancer 2
+        instances sur 8000 et 8001. Ensuite, je lance la génération de pdf à partir de 8000 avec un href de base pointant vers
+        8001.
+        Ensuite, en production, j'utilise:
+        <base href="{#{ absolute_url('/') }#}">
+        J'espère que cela aide
+    </!--div-->
+</body>
+</html>

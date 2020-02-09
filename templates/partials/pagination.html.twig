@@ -1,0 +1,13 @@
+<br>
+<ul class="paginationProduct justify-content-end">
+    <li class="pageItem {{ page == 1 ? 'pageDisabled' : '' }}"><a class="pageLink"
+            href="{{ path(route, { 'page' : page - 1 }) }}"><i class="fas fa-arrow-left"></i></a></li>
+    {% for i in 1..pages %}
+        <li class="pageItem {{ i == page ? 'activePagination' : '' }}">
+            <a class="pageLink" href="{{ path(route, { 'page' : i }) }}">{{ i }}</a>
+        </li>
+    {% endfor %}
+    <li class="pageItem {{ page == pages ? 'pageDisabled' : '' }}">
+        <a class="pageLink" href="{{ path(route, { 'page' : page + 1 }) }}"><i class="fas fa-arrow-right"></i></a>
+    </li>
+</ul>

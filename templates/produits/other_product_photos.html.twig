@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Autres photos du produit' %}
+
+{% block content %}
+<div class="retour mb-4">
+    <div class="returned"><a href="{{ path('show_produits') }}">Retour</a></div>
+    <div><a href=""></a></div>
+    <div class="title"></div>
+</div>
+
+<div class="otherBlock">
+    <div class="large mb-2">
+        <a href="{{ asset('images/produits/') ~ produit.image[0].imageName }}">
+            <img id="large" src="{{ asset('images/produits/') ~ produit.image[0].imageName }}" alt="{{ produit.titre }}"
+                class="img-fluid mb-4"></a>
+    </div>
+    <div class="row voirLarge mb-4">
+        {% for image in produit.image %}
+        <div class="thumbnailVoir">
+            <img src="{{ asset('images/produits/') ~ image.imageName }}" alt="" class="img-fluid mb-4 thumbnailImg">
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

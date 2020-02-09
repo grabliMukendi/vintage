@@ -1,0 +1,15 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+secure:
+    path:       /secure
+    controller: App\Controller\MainController::secure
+    schemes:    [https]
+
+controllers:
+    resource: '../src/Controller/'
+    type:     annotation
+
+app_logout:
+    path: /deconnexion
+    methods: GET

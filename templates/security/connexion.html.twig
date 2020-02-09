@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Connexion' %}
+
+{% block main %}
+
+<div class="connection">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-4 register">
+                {% if hasError %}
+                    <div class="alert alert-danger"><strong>Désolé !</strong> Erreur sur les identifiants.</div>
+                {% endif %}
+                <h4 class="text-center leadTitle2">Déjà Membre Vintage ?</h4><br><br>
+                <form action="{{ path('connexion') }}" method="post" id="connectForm">
+                    <div class="form-group">
+                        <input type="text" name="_username" id="username" class="form-control" placeholder="Nom d'utilisateur *" value="{{ username }}">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="_password" id="password" class="form-control" placeholder="Mot de passe *">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btnSubmit">Se connecter</button>
+                    </div>
+                </form><br>
+
+                <p class="orBar">OU</p>
+
+                <h4 class="text-center leadTitle">Devenez membre de Vintage</h4><br><br>
+                <a href="{{ path('inscription') }}" class="btn col-12 btnSubmit">S'inscrire</a>
+
+                <div class="champsObligatoires">
+                    <p>* Champs obligatoires.</p>
+    
+                    <p>Si vous rencontrez des problèmes pour vous connecter sur le site Vintage, nous vous conseillons de fermer toutes vos fenêtres de navigateur Internet. Si le problème persiste, vous pouvez <a href="">nettoyer les cookies de votre navigateur</a>.</p>
+    
+                    <p>Consulter notre <a href="">Politique de Confidentialité et Protection de la Vie Privée</a>.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

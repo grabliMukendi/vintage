@@ -1,0 +1,266 @@
+{% extends 'base.html.twig' %}
+
+{% set title = produit.titre %}
+{% block motsCles %}
+	{{ produit.titre | keywords(2) }}
+{% endblock %}
+{% block description %}
+	{{ produit.description | striptags | truncate(200,true) }}
+{% endblock %}
+
+{% block content %}
+	<div class="retour">
+		<div class="returned">
+			<a href="{{ path('home') }}">Retour</a>
+		</div>
+		<div>{{ produit.Categorie }}
+			/</div>
+		<div class="title">{{ produit.titre }}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-5 imageProduit">
+			<div class="productLarge">
+				{% for image in produit.image %}
+					{% if loop.first %}
+						<a href="{{ asset('images/produits/') ~ image.imageName }}">
+							<img id="largeZoom" src="{{ asset('images/produits/') ~ image.imageName }}" alt="{{ produit.titre }}" class="img-fluid mb-4" data-zoom-image="{{ asset('images/produits/') ~ image.imageName }}">
+						</a>
+					{% endif %}
+				{% endfor %}
+			</div>
+			<div class="productThumbnail">
+				{% for image in produit.image %}
+					{% if loop.first %}
+						<div class="thumbnail ficheActive">
+							<img data-image="{{ asset('images/produits/' ~ image.imageName) }}" src="{{ asset('images/produits/' ~ image.imageName) }}" data-zoom-image="{{ asset('images/produits/' ~ image.imageName) }}" alt="{{ produit.titre }}" class="img-fluid thumbImg">
+						</div>
+					{% else %}
+						<div class="thumbnail">
+							<img data-image="{{ asset('images/produits/' ~ image.imageName) }}" src="{{ asset('images/produits/' ~ image.imageName) }}" data-zoom-image="{{ asset('images/produits/' ~ image.imageName) }}" alt="{{ produit.titre }}" class="img-fluid thumbImg">
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+		<div class="col-md-7">
+			<h4 class="title">{{ produit.titre | upper }}</h4>
+			<div class="ratingsSuccess mt-1 mb-2">
+				{% if produit.comments | length != null %}
+					{% include 'partials/ratings.html.twig' with { 'rating' : produit.avgRatings } %}
+					<span class="ml-2 avisProduct__js">
+						<a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}">{{ produit.comments | length }} évaluation{{ produit.comments | length > 1 ? 's' : '' }}</a>
+					</span>
+				{% endif %}
+			</div>
+			<p class="priceBig">
+				{% if produit.promotion | length != null %}
+					{% set prixTTC = produit.prix | tva(produit.tva.multiplicate) %}
+					
+					{{ prixTTC | promo( produit.promotion.remise) | price_format(produit.prix, ',', ' ') }} €
+				{% else %}
+					{{ produit.prix | tva(produit.tva.multiplicate) | price_format(produit.prix, ',', ' ') }} €
+				{% endif %}
+			</p>
+			{% if produit.promotion | length != null %}
+				<div class="promotion">
+					<span class="priceReduced">{{ produit.prix | tva(produit.tva.multiplicate) | price_format(produit.prix, ',', ' ') }}€</span><br>
+					<small class="alert-success px-2 py-1">-{{ produit.promotion.remise }}%</small>
+				</div>
+			{% endif %}
+			<!--div class="breakGradient">Lire la suite</div-->
+			<p class="desc mb-4">{{ produit.description | raw }}</p>
+			<!--div id="gradient"></div-->
+			{% if panier[produit.id] is not defined %}
+				<form action="{{ path('cart_add_in_form', { 'id' : produit.id }) }}" method="post">
+					<div class="row">
+						<div class="col-md-4 form-group">
+							<label class="title" for="quantite">Quantité</label>
+							<select class="form-control {{ (produit.disponible < 5) ? 'alert-danger' : ''}}" name="quantite" id="quantite">
+								{% for i in 1..5  if produit.disponible >= i %}
+									<option>{{ i }}</option>
+								{% else %}
+									<option>{{ produit.disponible }}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<div class="col-md-8 form-group alignChildrenBottom">
+							<button type="submit" class="btn btnSubmit col-12" href="">Ajouter au panier</button>
+						</div>
+					</div>
+			{% else %}
+				<div class="form-group">
+					<a href="{{ path('cart_index') }}" class="btn btnSuccess2 col-12">Voir panier</a>
+				</div>
+			{% endif %}
+				</form>
+
+				{% if otherProducts | length != null %}
+					<div class="otherProducts mt-4">
+						<h4 class="title titleBefore"><span class="spanBefore">Découvrez également :</span></h4>
+
+						<div class="rowProductThumbOther mt-4">
+							{% for product in otherProducts %}
+								<div class="productThumbOther">
+									{% for image in product.image %}
+										{% if loop.first %}
+											<div class="thumbProdOther">
+												<a href="{{ path('fiche_produit', { 'id' : product.id, 'slug' : produit.slug }) }}">
+													<img src="{{ asset('images/produits/') ~ image.imageName }}" alt="{{ product.titre }}" class="img-fluid otherProdImg">
+												</a>
+											</div>
+										{% endif %}
+									{% endfor %}
+									<a class="notSettings" href="{{ path('fiche_produit', { 'id' : product.id, 'slug' : produit.slug }) }}">
+										<div class="mt-2 productThumbOtherTitle">{{ product.titre | striptags | truncate(20,true)  }}</div>
+										<div class="productThumbOtherPrice">{{ product.prix | tva(product.tva.multiplicate) | number_format(2, ',', ' ') }}</div>
+									</a>
+								</div>
+							{% endfor %}
+						</div>
+							
+					</div>
+				{% endif %}
+		</div>
+	</div>
+
+	{% if produit.comments | length != null %}
+		<div class="comments">
+			<h4 class="title titleBefore mb-4 mt-4"><span class="spanBefore">Ce que disent nos acheteurs :</span></h4>
+			<div class="alert alert-info mb-4 col-md-9">
+				<h5 class="alert-heading">
+					<div class="row align-items-center">
+						<div class="col-md-8">
+							Note globale donnée par nos acheteurs <br>
+						</div>
+						<div class="col-md-4 text-right">
+							{% include "partials/ratings.html.twig" with { 'rating' : produit.avgRatings } %}<br>
+							<small>(Calculée sur {{ produit.comments | length }} avis)</small>
+						</div>
+					</div>
+				</h5>
+			</div><br>
+			{% for comment in produit.comments %}
+				<div class="commentsBlock mb-4">
+					<div class="commentAvatar bg-light mr-4">
+						{% if comment.author.userAdress is empty %}
+							<img src="{{ asset('photo/user.svg') }}" alt="{{ comment.produit.titre }}" class="img-fluid userEmpty">
+						{% endif %}
+
+						{% if comment.author.userAdress is not empty and comment.author.userAdress.avatar == null %}
+							<img src="{{ asset('photo/user.svg') }}" alt="{{ comment.produit.titre }}" class="img-fluid userEmpty">
+						{% endif %}
+
+						{% if comment.author.userAdress is not empty and comment.author.userAdress.avatar != null %}
+							<img src="{{ asset('images/produits/' ~ comment.author.userAdress.avatar) }}" alt="{{ comment.produit.titre }}" class="img-fluid">
+						{% endif %}
+					</div>
+					<div class="commentAuthor">
+						<p>
+							<strong>{{ comment.author.prenom }}</strong> a dit :
+						</p>
+						<div class="bg-light rounded py-3 px-3 commentContent">
+							<blockquote>
+								{{ comment.content }}
+							</blockquote>
+							<strong>Note donnée :</strong> 
+							<span class="ratings">
+								{% include 'partials/ratings.html.twig' with { 'rating' : comment.rating } %}
+							</span>
+						</div>
+					</div>
+				</div><br>
+			{% endfor %}
+			
+		</div>
+	{% endif %}
+		
+	{% for key, commande in commandeUser %}
+	
+		{% if key == produit.id %}
+
+			<div class="addComments">
+				{% set comment = produit.commentFromAuthor(app.user) %}
+				
+				{% if comment == null %}
+					<h4 class="title titleBefore mb-4 mt-4"><span class="spanBefore">Votre avis compte !</span></h4>
+
+					{{ form_start(form) }}
+
+						<div>Note sur 5</div>
+						<div class="js-ratings-box">
+							<span class="icon-popular"></span>
+							<span class="icon-popular"></span>
+							<span class="icon-popular"></span>
+							<span class="icon-popular"></span>
+							<span class="icon-popular"></span>
+						</div><br>
+
+					{{ form_row(form.rating) }}
+					
+					{{ form_row(form.content, { 'attr' : { 'placeholder' : 'N\'hésitez pas être très précis, cela aidera nos futurs acheteurs !' } }) }}
+
+					{{ form_rest(form) }}
+						<button type="submit" class="btn btnSubmit">C'est parti !</button>
+					{{ form_end(form) }}
+
+				{% endif %}
+			</div>
+
+		{% endif %}
+		
+	{% endfor %}
+
+{% endblock %}
+
+{% block javascripts %}
+	<script>
+
+		const stars = document.querySelector('.js-ratings-box').children;
+		const ratingValue = document.querySelector('#comments_rating');
+		let index;
+
+		for(let i = 0; i < stars.length; i++) 
+		{
+			stars[i].addEventListener('mouseover', () => 
+			{
+				console.log(i);
+				
+				for(let r = 0; r < stars.length; r++) 
+				{
+					stars[r].classList.remove('icon-popular-solid');
+					stars[r].classList.add('icon-popular');
+				}
+
+				for(let r = 0; r <= i; r++) 
+				{
+					stars[r].classList.remove('icon-popular');
+					stars[r].classList.add('icon-popular-solid');
+				}
+			});
+
+			stars[i].addEventListener('click', () => 
+			{
+				ratingValue.value = i + 1;
+				index = i;
+			});
+
+			stars[i].addEventListener('mouseout', () => {
+				//console.log(i);
+
+				for (let r = 0; r < stars.length; r++) {
+					stars[r].classList.remove('icon-popular-solid');
+					stars[r].classList.add('icon-popular');
+				}
+
+				for (let r = 0; r <= index; r++) {
+					stars[r].classList.remove('icon-popular');
+					stars[r].classList.add('icon-popular-solid');
+				}
+			});
+
+		}
+		
+
+	</script>
+
+{% endblock %}

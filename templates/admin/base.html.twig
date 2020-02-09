@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="{% block motsCles %}{% endblock %}">
+    <meta name="description" content="{% block description %}{% endblock %}">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,600,600i,700,700i,900,900i&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    
+    <!-- Bootstrap Date Picker Stylesheet -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+    <!-- Ico-moon Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('css/icomoon/style.css') }}">
+    <!-- Ico-moon_suite Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('css/icomoon_suite/style.css') }}">
+    <!-- Personal Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap Date Picker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+    <!-- ElevateZoom JS -->
+    <script src='{{ asset('images/produits/elevatezoom-master/jquery.elevatezoom.js') }}'></script>
+    
+    <!-- Personal JavaScript App -->
+    <script src="{{ asset('js/app_old.js') }}"></script>
+    
+    <title>{{ title }}</title>
+</head>
+<body style="padding-top: 0 !important;" >
+    
+    <div class="dashboard__modal">
+        <div class="modal__left">
+            <div class="search__dashboard">
+                <form id="queryForm" action="{{ path('search_products') }}" method="post">
+                    <span>
+                        <i class="icon-magnifying-glass"></i>
+                    </span>
+                    <input type="text" name="query" id="search" placeholder="Rechercher">
+                </form>
+                <div id="result"></div>
+            </div>
+            <div class="notifications__dashboard">
+    
+            </div>
+        </div>
+        <div class="modal__right"></div>
+    </div>
+    
+    <div class="dashboard">
+        <div class="navbarDashboard">
+            <div class="dashboardNav">
+                <div class="settingDashboard">
+                    <div class="text-center">
+                        <img src="{{ asset('photo/logo_vintage.svg') }}" alt="Logo LCZ" width="160">
+                    </div>
+                    <hr>
+                    <div class="navbarDashboard__js align-middle mb-4 mt-4">
+                        <i class="icon-settings-1 mr-2"></i>Administration
+                    </div>
+                    <div class="gestion">
+                        <a class="{{ title == 'Tableau de bord' ? 'gestion__dash__active' : '' }}" href="{{ path('dashboard') }}">
+                            <i class="icon-analysis"></i>
+                            Tableau de bord
+                        </a>
+                        <a href="">
+                            <i class="icon-userEdit"></i>
+                            Gestion des membres
+                        </a>
+                        <a class="{{ title == 'Ajout et modification du produit' ? 'gestion__dash__active' : '' }}" href="{{ path('show_produits') }}">
+                            <i class="icon-box-1"></i>
+                            Gestion des produits
+                        </a>
+                        <a class="{{ title == 'Gestion des commandes' ? 'gestion__dash__active' : '' }}" href="{{ path('commandes_registered') }}">
+                            <i class="icon-box"></i>
+                            Gestion des commandes
+                        </a>
+                        <a href="">
+                            <i class="icon-conversation"></i>
+                            Gestion des commentaires
+                        </a>
+                        <a href="">
+                            <i class="icon-coupon"></i>
+                            Gestion des remises
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <div class="dash__ico__bottom">
+                    <div class="authentication__dashboard text-center">
+                        <i class="icon-bell1 notification__js"></i>
+    
+                        <span class="userDash__js">
+                            <div class="dash__user__profile text-center">
+                                <a href="{{ path('user_profile') }}">
+                                    <i class="icon-user1"></i>
+                                    Mon Compte
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="{{ path('deconnexion') }}"><i class="icon-turn-off"></i>
+                                    Déconnexion
+                                </a>
+                            </div>
+                            <i class="icon-users"></i>
+                        </span>
+    
+                        <i class="icon-magnifying-glass searchDash__js"></i>
+                        <a href="{{ path('home') }}">
+                            <i class="icon-house"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="bg-light dashboardContent">
+            {% for alerte in app.flashes('success') %}
+            <div class="alert alert-success">{{ alerte | raw }}</div><br>
+            {% endfor %}
+    
+            {% for alerte in app.flashes('errors') %}
+            <div class="alert alert-danger">{{ alerte | raw }}</div><br>
+            {% endfor %}
+    
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    
+    
+    {% block javascripts %}{% endblock %}
+
+</body>
+</html>

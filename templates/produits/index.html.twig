@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Acceuil' %}
+
+{% block content %}
+	
+	<h1 class="title text-white text-center">Parcourir les catégories</h1>
+	<div class="row__category mt-4">
+		{% for tendance in tendances %}
+			<div class="category__card">
+				{% for image in tendance.image %}
+					{% if loop.first %}
+						<img class="img-fluid" src="{{ asset('images/produits/') ~ image.imageName }}" alt="{{ tendance.titre }}">
+					{% endif %}
+				{% endfor %}
+				<div class="category__redirect">
+					<a href="{{ path('categorie_tendance_products', { 'cat' : tendance.categorie.nom, 'rubrique' : tendance.rubrique }) }}">
+						<div class="category__name">{{ tendance.categorie.nom | capitalize }}</div>
+						<i class="icon-add-1"></i>
+					</a>
+				</div>
+			</div>
+		{% endfor %}
+
+		{% for artDeco in artDecos %}
+			<div class="category__card">
+				{% for image in artDeco.image %}
+					{% if loop.first %}
+						<img class="img-fluid" src="{{ asset('images/produits/') ~ image.imageName }}" alt="{{ artDeco.titre }}">
+					{% endif %}
+				{% endfor %}
+				<div class="category__redirect">
+					<a href="{{ path('categorie_tendance_products', { 'cat' : artDeco.categorie.nom, 'rubrique' : artDeco.rubrique }) }}">
+						<div class="category__name">{{ artDeco.categorie.nom | capitalize }}</div>
+						<i class="icon-add-1"></i>
+					</a>
+				</div>
+			</div>
+		{% endfor %}
+
+		{% for automobile in automobiles %}
+			<div class="category__card">
+				{% for image in automobile.image %}
+					{% if loop.first %}
+						<img class="img-fluid" src="{{ asset('images/produits/') ~ image.imageName }}" alt="{{ automobile.titre }}">
+					{% endif %}
+				{% endfor %}
+				<div class="category__redirect">
+					<a href="{{ path('categorie_tendance_products', { 'cat' : automobile.categorie.nom, 'rubrique' : automobile.rubrique }) }}">
+						<div class="category__name">{{ automobile.categorie.nom | capitalize }}</div>
+						<i class="icon-add-1"></i>
+					</a>
+				</div>
+			</div>
+		{% endfor %}
+
+		{% for sportLoisir in sportLoisirs %}
+			<div class="category__card">
+				{% for image in sportLoisir.image %}
+					{% if loop.first %}
+						<img class="img-fluid" src="{{ asset('images/produits/') ~ image.imageName }}" alt="{{ sportLoisir.titre }}">
+					{% endif %}
+				{% endfor %}
+				<div class="category__redirect">
+					<a href="{{ path('categorie_tendance_products', { 'cat' : sportLoisir.categorie.nom, 'rubrique' : sportLoisir.rubrique }) }}">
+						<div class="category__name">{{ sportLoisir.categorie.nom | capitalize }}</div>
+						<i class="icon-add-1"></i>
+					</a>
+				</div>
+			</div>
+		{% endfor %}
+		
+	</div>
+		
+{% endblock %}

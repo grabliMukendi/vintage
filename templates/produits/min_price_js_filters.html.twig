@@ -1,0 +1,66 @@
+{% for produit in produits.prixCroissant %}
+    <div class="col-md-6 mb-4 js_card" id="{{ produit.id }}">
+        <div class="card">
+            <div class="row card-body tPrice">
+                <div class="col-md-6">
+                    <a class="titleProduit" href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}">
+                        <div class="card-title">{{ produit.titre }}</div>
+                    </a>
+                </div>
+                <div class="col-md-6 text-right">
+                    <div class="card-title price">
+                        {% if produit.promotion | length != null %}
+                        {% set prixTTC = produit.prix | tva(produit.tva.multiplicate) %}
+    
+                        {{ prixTTC | promo( produit.promotion.remise) | price_format(produit.prix, ',', ' ') }}
+                        €</div>
+                    {% else %}
+                    {{ produit.prix | tva(produit.tva.multiplicate) | price_format(produit.prix, ',', ' ') }}
+                    €
+                </div>
+                {% endif %}
+    
+                {% if produit.promotion | length != null %}
+                <div class="promotion">
+                    <span
+                        class="priceReduced">{{ produit.prix | tva(produit.tva.multiplicate) | price_format(produit.prix, ',', ' ') }}€</span><br>
+                    <small class="alert-success px-2 py-1">-{{ produit.promotion.remise }}%</small>
+                </div>
+                {% endif %}
+                <div class="ratingsSuccess mt-1">
+                    {% if produit.comments | length != null %}
+                    {% include 'partials/ratings.html.twig' with { 'rating' : produit.avgRatings } %} <br>
+                    <span class="avisProduct">
+                        <a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}">{{ produit.comments | length }}
+                            avis</a>
+                    </span>
+    
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="cardShow">
+            {% for image in produit.image %}
+            {% if loop.first %}
+            <a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}">
+                <img src="{{ asset('images/produits/' ~ image.imageName) }}" class="card-img-top" alt="{{ produit.titre }}">
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="row card-body">
+            <div class="col-md-6">
+                <a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}" class="btn titleProduit">En savoir+</a>
+            </div>
+            <div class="col-md-6">
+                {% if panier[produit.id] is not defined %}
+                <a href="{{ path('cart_add', { 'id' : produit.id, 'slug' : produit.slug }) }}" class="btn btnSubmit2 col-12">Achat direct</a>
+                {% else %}
+                <a href="{{ path('cart_index') }}" class="btn btnSuccess2 col-12">Voir panier</a>
+    
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    </div>
+{% endfor %}

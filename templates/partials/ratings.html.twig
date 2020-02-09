@@ -1,0 +1,7 @@
+{% for star in 1..5 %}
+    {% if star <= rating %}
+        <i class="icon-popular-solid"></i>
+    {% else %}
+        <i class="icon-popular"></i>
+    {% endif %}
+{% endfor %}

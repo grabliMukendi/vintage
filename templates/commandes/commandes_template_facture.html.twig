@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Facturation de la commande' %}
+
+{% block content %}
+
+{% for facture in factures %}
+<page backtop="0mm" backright="10mm" backbottom="20mm" backleft="10mm">
+
+    <table class="tableFacture table">
+        <tr>
+            <td colspan="2" class="text-left">
+                <img src="{{ asset('photo/logo_vintage.svg') }}" alt="Logo Vintage" width="240">
+                <h1 class="mt-4">Détails de la facture</h1>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-left">
+                <span>DE</span>
+                <br/>
+                <ul>
+                    <li class="title">Vintage</li>
+                    <li>12, Rue du Général de Gaulle</li>
+                    <li>95520 - Osny</li>
+                    <li>France</li>
+                    <li>Numéro de TVA : FR68752925594</li>
+                </ul>
+            </td>
+            <td class="text-right">
+                <span class="titleFacture">FACTURE N° :</span>
+                    <span class="titleFacture facRef">{{ facture.reference < 10 ? '0' ~ facture.reference : '' }}</span>
+                <br/>
+                <br/>
+                <span>DATE : </span>
+                    {{ facture.date ? facture.date | date('d/m/Y à H:i') : '' }}
+            </td>
+        </tr>
+        <tr>
+            <td class="text-left">
+            <br/>
+            <span>FACTURÉ À</span>
+            <br/>
+                {% set livraison = facture.commande.livraison %}
+                {% if livraison != null %}
+                    {{ livraison.prenom }} {{ livraison.nom | upper }} <br>
+                    {{ livraison.adresse }} <br>
+                    {{ livraison.codePostal }} - {{ livraison.ville }} <br>
+                    {{ livraison.pays }} <br>
+                {% endif %}
+            </td>
+            <td class="text-right"></td>
+        </tr>
+    </table>
+    <table class="content table">
+        <thead>
+            <tr class="ligne1Content">
+                <th class="text-left couleurgris taille1">
+                    Désignation
+                </th>
+                <th class="text-center couleurmoinsgris taille2">
+                    Quantité
+                </th>
+                <th class="text-center couleurgris taille3">
+                    Prix HT
+                </th>
+                <th class="text-center couleurgris taille5">
+                    Statut
+                </th>
+                <th class="text-center couleurverte taille4 colorwhite">
+                    Total HT
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in facture.commande.produit %}
+                <tr class="couleurgris">
+                    <td class="text-left couleurgris taille1">
+                        {{ item.reference }}
+                    </td>
+                    <td class="text-center couleurmoinsgris taille2">
+                        {{ item.quantite }}
+                    </td>
+                    <td class="text-center taille3">
+                        {{ item.prixHT | number_format(2, ',', ' ') }} €
+                    </td>
+                    <td class="text-center taille5">
+                        {% if facture.valider != true %}
+                           <div class="btn btn-danger btn-sm smBtnDanger">{{ 'En cours' }}</div>
+                        {% else %}
+                            <div class="btn btn-success btn-sm smBtn">{{ 'Payé' }}</div>
+                        {% endif %}
+                    </td>
+                    <td class="text-center couleurverte taille4 colorwhite">
+                        {{ (item.quantite * item.prixHT) | number_format(2, ',', ' ') }} €
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-right tht title">
+                    TOTAL HT
+                </td>
+                <td class="tht text-center title">
+                    {{ facture.commande.totalHT | number_format(2, ',', ' ') }} €
+                </td>
+            </tr>
+            {% for key, item in facture.commande.tva %}
+                <tr>
+                    <td colspan="4" class="text-right tht title">
+                            TVA à {{ key }}
+                    </td>
+                    <td colspan="4" class="text-center tht title">
+                        {{ item | number_format(2, ',', '') }} €
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4" class="text-right">
+                    <h4 class="title text-danger">TOTAL TTC À PAYER</h4>
+                </td>
+                <td class="text-center">
+                    <h4 class="title text-danger">{{ facture.commande.totalTTC | number_format(2, ',', ' ') }} €</h4>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" class="factureConditions">
+                    CONDITIONS ET MOYENS DE PAIEMENT :
+                    Les factures seront payables en Euros à réception et au plus tard dans un délai de 45 jours fin de mois ou 60 jours à
+                    compter de leur date d’émission.
+                    
+                    Tout retard de paiement entraînera l’exigibilité de pénalités de retard à un taux égal à
+                    trois fois le taux d’intérêt légal en vigueur en France et d’une indemnité forfaitaire minimale de 40 (quarante) euros
+                    pour frais de recouvrement, dues de plein droit, sans qu'un rappel soit nécessaire.
+                </td>
+            </tr>
+        </tfoot>
+            
+    </table>
+    </page>
+{% endfor %}
+    
+{% endblock %}

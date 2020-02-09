@@ -1,0 +1,178 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Sport et loisir' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group">
+            <div class="titleCateg mb-4">Nos produits</div>
+            {{ render(url('categorie_by_sport_loisir')) }}
+        </div>
+        <hr>
+        <div class="titleCateg mb-4">Fourchette de prix</div>
+        <div class="priceCateg js-filter">
+            <form action="{{ path('sport_loisir_show_price') }}" id="priceForm" method="post">
+                <input type="range" name="min_price" min="10" max="1000" step="10" value="10" id="min_price"
+                    class="form-control-range">
+                <div id="price_range"></div>
+            </form>
+        </div>
+        <hr>
+        <a href="{{ path('home') }}" class="allDispo mt-4">Tous les produits disponibles</a>
+    </div><!-- col-md-3 -->
+    <div class="col-md-9">
+        <div class="row justify-content-end">
+            <div class="col-md-4">
+                <div class="trieBy">
+                    Trier par
+                    <span class="float-right arrowCat">
+                        <i class="icon-next-1 angleDown"></i>
+                    </span>
+                    <div class="list-group filtreCroissantParent priceFilter js-filter">
+                        <a href="{{ path('sport_loisir_prix_croissant') }}"
+                            class="list-group-item list-group-item-action filtreCroissant js-filterMinPrice">
+                            Prix croissant
+                        </a>
+                        <a href="{{ path('sport_loisir_prix_decroissant') }}"
+                            class="list-group-item list-group-item-action filtreCroissant js-filterMaxPrice">Prix
+                            décroissant</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="filtres">
+                    Filtres
+                    <span class="float-right arrowCat">
+                        <i class="icon-next-1 angleDown"></i>
+                    </span>
+                    <div class="list-group filtreCroissantParent sizeColorFilter">
+                        <div class="wrapper">
+                            <div class="list-group-item filtreF title">
+                                Taille
+                            </div>
+                            {{ render(url('taille_sport_loisir')) }}
+    
+                            <div class="list-group-item filtreF title">
+                                Couleur
+                            </div>
+                            {{ render(url('couleur_by_sport_loisir')) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><br><!-- row justify-content-end -->
+
+        <div class="row jsProductsDisplay">
+        {% if produits | length != 0 %}
+            {% if stringSaisie is not empty %}
+            <h4 class="mb-4 successAlerto">
+                <strong>{{ nbSearch }}</strong>
+                produit{{ (nbSearch > 1) ? 's' : '' }}
+                correspond{{ (nbSearch > 1) ? 'ent' : '' }}
+                à
+                <span class="alerto">"{{ stringSaisie }}"</span>
+            </h4><br><br>
+            {% endif %}
+
+            {% for produit in produits %}
+            <div class="col-md-6 mb-4 js_card" id="{{ produit.id }}">
+                <div class="card">
+                    <div class="row card-body tPrice">
+                        <div class="col-md-6">
+                            <a class="titleProduit" href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}">
+                                <div class="card-title">{{ produit.titre }}</div>
+                            </a>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <div class="card-title price">
+                                {% if produit.promotion | length != null %}
+                                {% set prixTTC = produit.prix | tva(produit.tva.multiplicate) %}
+
+                                {{ prixTTC | promo( produit.promotion.remise) | price_format(produit.prix, ',', ' ') }}
+                                €</div>
+                            {% else %}
+                            {{ produit.prix | tva(produit.tva.multiplicate) | price_format(produit.prix, ',', ' ') }}
+                            €
+                        </div>
+                        {% endif %}
+
+                        {% if produit.promotion | length != null %}
+                        <div class="promotion">
+                            <span
+                                class="priceReduced">{{ produit.prix | tva(produit.tva.multiplicate) | price_format(produit.prix, ',', ' ') }}€</span><br>
+                            <small class="alert-success px-2 py-1">-{{ produit.promotion.remise }}%</small>
+                        </div>
+                        {% endif %}
+                        <div class="ratingsSuccess mt-1">
+                            {% if produit.comments | length != null %}
+                            {% include 'partials/ratings.html.twig' with { 'rating' : produit.avgRatings } %} <br>
+                            <span class="avisProduct">
+                                <a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}">{{ produit.comments | length }}
+                                    avis</a>
+                            </span>
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="cardShow">
+                    {% for image in produit.image %}
+                    {% if loop.first %}
+                    <a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}">
+                        <img src="{{ asset('images/produits/' ~ image.imageName) }}" class="card-img-top"
+                            alt="{{ produit.titre }}">
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="row card-body">
+                    <div class="col-md-6">
+                        <a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}" class="btn titleProduit">En
+                            savoir+</a>
+                    </div>
+                    <div class="col-md-6">
+                        {% if panier[produit.id] is not defined %}
+                        <a href="{{ path('cart_add', { 'id' : produit.id, 'slug' : produit.slug }) }}" class="btn btnSubmit2 col-12">Achat
+                            direct</a>
+                        {% else %}
+                        <a href="{{ path('cart_index') }}" class="btn btnSuccess2 col-12">Voir panier</a>
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div><!-- row jsProductsDisplay -->
+        {% endfor %}
+        {% else %}
+        <div class="alertSearch">
+            <div class="searchAlerto">
+                <h3>Aïe! Aucun résultat pour :
+                    <span class="alerto">"{{ stringSaisie }}"</span>
+                </h3>
+                <div>Ça ne vous arrête pas tout de même ?</div><br>
+                <h6>Vérifiez l’orthographe et les éventuelles fautes de frappe</h6>
+                <div>Oui, ce sont des choses qui arrivent...</div>
+            </div>
+        </div><!-- alertSearch -->
+        {% endif %}
+    </div><!-- col-md-9 -->
+    <div class="col">
+        {% set route = app.request.attributes.get('_route') %}
+        <ul class="paginationProduct justify-content-end">
+            <li class="pageItem {{ page == 1 ? 'pageDisabled' : '' }}"><a class="pageLink"
+                    href="{{ path(route, { 'page' : page - 1 }) }}"><i class="fas fa-arrow-left"></i></a></li>
+            {% for i in 1..pages %}
+            <li class="pageItem {{ i == page ? 'activePagination' : '' }}">
+                <a class="pageLink" href="{{ path(route, { 'page' : i }) }}">{{ i }}</a>
+            </li>
+            {% endfor %}
+            <li class="pageItem {{ page == pages ? 'pageDisabled' : '' }}">
+                <a class="pageLink" href="{{ path(route, { 'page' : page + 1 }) }}"><i class="fas fa-arrow-right"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+</div><!-- row -->
+
+{% endblock %}

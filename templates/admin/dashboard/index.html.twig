@@ -1,0 +1,130 @@
+{% extends 'admin/base.html.twig' %}
+
+{% set title = 'Tableau de bord' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col">
+            <div class="header__pretitle font-weight-bold mb-1">aperçu</div>
+            <h2 class="font-weight-bold">Tableau de bord</h2>
+        </div>
+        <div class="col text-right">
+            <a class="btn btnSubmit text-white">Éditer le rapport</a>
+        </div>
+    </div>
+    <hr><br>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-4 ico__dashboard">
+                            <img class="img-fluid" src="{{ asset('photo/commerce-and-shopping.svg') }}" alt="commerce and shopping">
+                        </div>
+                        <div class="col-8">
+                            <span class="h5 text-muted mb-0">
+                                {{ products }} produits disponibles
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-4 ico__dashboard">
+                            <img class="img-fluid" src="{{ asset('photo/team.svg') }}" alt="team">
+                        </div>
+                        <div class="col-8">
+                            <span class="h5 text-muted mb-0">
+                                {{ stats.users }} utilisateurs
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-4 ico__dashboard">
+                            <img class="img-fluid" src="{{ asset('photo/shopping-cart.svg') }}" alt="shopping cart">
+                        </div>
+                        <div class="col-8">
+                            <span class="h5 text-muted mb-0">
+                                {{ commandes }} commandes
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- row -->
+    
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-4 ico__dashboard">
+                            <img class="img-fluid" src="{{ asset('photo/conversation.svg') }}" alt="conversation">
+                        </div>
+                        <div class="col-8">
+                            <span class="h5 text-muted mb-0">
+                                {{ stats.comments }} avis
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-4 ico__dashboard">
+                            <img class="img-fluid" src="{{ asset('photo/rating.svg') }}" alt="rating">
+                        </div>
+                        <div class="col-8">
+                            <span class="h5 text-muted mb-0">
+                                {{ ratings }} notes
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-4 ico__dashboard">
+                            <img class="img-fluid" src="{{ asset('photo/coupon (1).svg') }}" alt="coupon">
+                        </div>
+                        <div class="col-8">
+                            <span class="h5 text-muted mb-0">
+                                {{ stats.remises }} remises
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- row -->
+    <hr>
+    <div class="mt-4">
+        <h4 class="title">Meilleures ventes</h4>
+        
+        
+    </div><!-- row -->
+
+{% endblock %}

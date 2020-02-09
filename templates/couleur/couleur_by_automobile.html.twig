@@ -1,0 +1,8 @@
+{% for produit in produits %}
+    <div class="js-filterColors">
+        <a href="{{ path('couleur_tendance_products', { 'color' : produit.couleur.nom, 'rubrique' : produit.rubrique }) }}"
+            class="list-group-item list-group-item-action filtreF">
+            {{ produit.couleur.nom | capitalize }}
+        </a>
+    </div>
+{% endfor %}

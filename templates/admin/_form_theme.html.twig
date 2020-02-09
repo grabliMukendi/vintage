@@ -1,0 +1,13 @@
+{% block _produits_image_widget %}
+
+<ul id="produits-image-fields-list" data-prototype="{{ form_widget(prototype)|e }}"
+    data-widget-tags="{{ '<li></li>'|e }}" data-widget-counter="{{ value|length }}">
+    
+    {% for key,mediaForm in form.children %}
+        {{ form_widget(mediaForm) }}
+    {% endfor %}
+</ul>
+
+<button type="button" class="add-another-collection-widget btn btnSuccess2" data-list-selector="#produits-image-fields-list">Ajouter une image</button>
+
+{% endblock %}

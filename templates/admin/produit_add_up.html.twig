@@ -1,0 +1,83 @@
+{% extends 'admin/base.html.twig' %}
+
+{% set title = 'Ajout et modification du produit' %}
+
+{% block content %}
+
+<div class="mb-4 dash__returned">
+    <i class="icon-returned mr-2"></i>
+    <a href="{{ path('show_produits') }}">Retour</a>
+</div><br>
+
+<h3 class="leadTitleLeft">{{ action }} un produit</h3><br><br>
+
+{% form_theme produitForm 'admin/_form_theme.html.twig' %}
+{{ form_start(produitForm) }}
+{{ form_errors(produitForm) }}
+
+    <div class="row">
+        <div class="form-group col-md-8">
+            {{ form_row(produitForm.titre, { 'label' : 'Titre'}) }}
+        </div>
+        <div class="form-group col-md-4">
+            {{ form_row(produitForm.couleur, { 'label' : 'Couleur'}) }}
+        </div>
+    </div>
+    
+    <div class="form-group">
+        {{ form_row(produitForm.description, { 'label' : 'Description'}) }}
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-3">
+            {{ form_row(produitForm.taille) }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ form_row(produitForm.public) }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ form_row(produitForm.prix, { 'label' : 'Prix'}) }}
+        </div>
+        <div class="form-group col-md-3">
+            {{ form_row(produitForm.disponible, { 'label' : 'Stock'}) }}
+        </div>
+    </div>
+    
+    <div class="row category__images">
+        <div class="form-group col-md-6">
+            {{ form_widget(produitForm.image) }}
+        </div>
+        <div class="form-group col-md-6">
+            {{ form_row(produitForm.categorie, { 'label' : 'Catégorie'}) }}
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            {{ form_row(produitForm.tva, { 'label' : 'TAXE SUR LA VALEUR AJOUTÉE' }) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(produitForm.promotion, { 'label' : 'PROMOTION' }) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(produitForm.rubrique, { 'label' : 'RUBRIQUES' }) }}
+        </div>
+    </div>
+
+    {{ form_rest(produitForm) }}
+
+    {% if action == 'Ajouter' %}
+        <div class="row justify-content-md-center">
+            <button type="submit" class="btn btnSubmit" style="min-width:200px;">Ajouter</button>
+        </div>
+    {% else %}
+        <div class="row justify-content-md-center">
+            <button type="submit" class="btn btnSubmit" style="min-width:200px;">Modifier</button>
+        </div>
+    {% endif %}
+
+{{ form_end(produitForm) }}
+
+    
+
+{% endblock %}

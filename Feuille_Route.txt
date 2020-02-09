@@ -1,0 +1,39 @@
+Installation Symfony :
+    composer create-project symfony/website-skeleton nomDuProject
+
+Installation du server :
+    cd nomDuProject
+    composer require server --dev
+    php bin/console server:run
+
+Création du controller :
+    php bin/console make:controller
+
+Création de l'entité :
+    php bin/console make:entity
+
+L'étape suivante consiste à configurer l'application Symfony pour qu'elle utilise les styles Bootstrap 4 lors du rendu des formulaires. Si vous souhaitez les appliquer à tous les formulaires, définissez cette configuration:
+
+# config/packages/twig.yaml
+twig:
+    form_themes: ['bootstrap_4_layout.html.twig']
+
+Pour valider les champs du formulaire, veuillez insérer cette ligne :
+use Symfony\Component\Validator\Constraints as Assert;
+
+# config/packages/security.yaml
+schéma du providers de connexion : 
+    in_database: // l'endroit où symfony doit chercher le provider
+        entity:
+            class: App\Entity\User
+            property: username // ou email
+Dans main, en dessous de anonimous :
+    provider: in_database
+    form_login:
+        login_path: connexion
+        check_path: connexion
+
+Création du répertoire files :
+# config/services.yaml
+parameters:
+    photo_directory: '%kernel.project_dir%/public/photo'

@@ -1,0 +1,60 @@
+{% extends 'admin/base.html.twig' %}
+
+{% set title = 'Gestion des commandes' %}
+
+{% block content %}
+
+	<h3 class="leadTitleLeft">Gestion des commandes</h3><br><br>
+	{% if commandes is not empty %}
+		<table class="table table-responsive">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Acheteurs</th>
+					<th>Produit(s)</th>
+					<th>Réf.</th>
+					<th>Date</th>
+					<th class="text-center">Statut</th>
+					<th>Total</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for key, produit in commandes %}
+				{#{ dump(produit) }#}
+					<tr>
+						<td>{{ key + 1 }}</td>
+						<td>
+							{{ produit.user.prenom }} {{ produit.user.nom|upper }}
+						</td>
+						<td class="product__commande">
+							{% for item in produit.commande.produit %}
+								{{ item.reference }} <br><br>
+							{% endfor %}
+						</td>
+						<td>{{ produit.reference == 0 ? '<em>En cours</em>' : produit.reference }}</td>
+						<td>{{ produit.date|date('d/m/Y') }}</td>
+						<td class="text-center">{{ produit.valider == false ? '<span class="btn btn-danger btn-sm smBtnDanger">En cours</span>' : '<span class="btn btn-success btn-sm smBtn">Finalisée</span>' }}</td>
+						<td>{{ produit.commande.totalTTC|number_format(2, ',', ' ') }}€</td>
+
+						<td class="text-center">
+							<a class="confirmCommandeDel" href="{{ path('commande_delete', { 'id' : produit.id }) }}">
+								<i class="icon-garbage"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+
+			</tbody>
+		</table>
+	{% else %}
+		<div class="alert alert-danger">
+			<strong>Désolé !</strong>
+			Il n'existe aucun produit pour l'instant. Veuillez en ajouter.</div>
+	{% endif %}
+
+	{#{ produits.display }#}
+
+
+{% endblock %}

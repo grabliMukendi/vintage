@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% set title = 'Inscription' %}
+
+{% block main %}
+
+<div class="registration">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-6 register">
+                <h4 class="text-center leadTitle">Vous avez une question ? Contactez-nous!</h4><br>
+                <div class="mt-4">
+                    {{ form_start(form) }}
+                    <h5 class="title">Informations personnelles</h5>
+                    <hr>
+                    <div class="errorForm">{{ form_errors(form.nom) }}</div>
+                    {{ form_widget(form.nom, { 'attr' : { 'placeholder' : 'Nom *', 'class' : 'form-group', 'value' : user.nom } }) }}
+
+                    <div class="errorForm">{{ form_errors(form.prenom) }}</div>
+                    {{ form_widget(form.prenom, { 'attr' : { 'placeholder' : 'Prénom *', 'class' : 'form-group', 'value' : user.prenom } }) }}
+
+                    <div class="errorForm">{{ form_errors(form.email) }}</div>
+                    {{ form_widget(form.email, { 'attr' : { 'placeholder' : 'Email *', 'class' : 'form-group', 'value' : user.email } }) }}
+                    
+                    <div class="errorForm">{{ form_errors(form.telephone) }}</div>
+                    {{ form_widget(form.telephone, { 'attr' : { 'placeholder' : 'Téléphone *', 'class' : 'form-group', 'value' : telephone } }) }}
+
+                    <div class="errorForm">{{ form_errors(form.entreprise) }}</div>
+                    {{ form_widget(form.entreprise, { 'attr' : { 'placeholder' : 'Entreprise', 'class' : 'form-group' } }) }}
+
+                    <div class="errorForm">{{ form_errors(form.fonction) }}</div>
+                    {{ form_widget(form.fonction, { 'attr' : { 'placeholder' : 'Fonction', 'class' : 'form-group' } }) }}
+
+                    <br>
+                    <h5 class="title">Votre demande concerne</h5>
+                    <hr>
+                    {{ form_widget(form.produit, { 'attr' : { 'class' : 'form-group' } }) }}
+
+                    <div class="errorForm">{{ form_errors(form.message) }}</div>
+                    {{ form_widget(form.message, { 'attr' : { 'placeholder' : 'Message *', 'class' : 'form-group' } }) }}
+
+                    <button type="submit" class="btn btnSubmit">Envoyer</button>
+
+                    {{ form_end(form) }}
+
+                    <div class="champsObligatoires">
+                        <p>* Champs obligatoires.</p>
+
+                        <p>Ces champs sont obligatoires et sont destinés à Vintage, responsable du traitement, aux fins
+                            d’effectuer l’ensemble des opérations relatives à notre relation commerciale, à savoir la
+                            création de votre compte, les modalités de paiement, de gestion des réclamations et du
+                            service après-vente.</p>
+
+                        <p>Conformément à la Règlementation sur les Données Personnelles, nous vous informons de
+                            l’existence du droit de demander à Vintage l’accès à vos données, la rectification,
+                            l’effacement de celles-ci, ou une limitation du traitement relatif à vos données, ou le
+                            droit de vous opposer au traitement, le droit à la portabilité de vos données et ainsi que
+                            l’exercice de vos directives post-mortems. Pour plus d’information sur l’existence de vos
+                            droits ainsi que les moyens pour les mettre en œuvre, nous vous invitons à consulter
+                            l’Article III – Vos Droits de notre politique de confidentialité et de Protection de la Vie
+                            Privée.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
