@@ -47,15 +47,17 @@
                         <i class="icon-next-1 angleDown"></i>
                     </span>
                     <div class="list-group filtreCroissantParent sizeColorFilter">
-                        <div class="list-group-item filtreF title">
-                            Taille
+                        <div class="wrapper">
+                            <div class="list-group-item filtreF title">
+                                Taille
+                            </div>
+                            {{ render(url('taille')) }}
+    
+                            <div class="list-group-item filtreF title">
+                                Couleur
+                            </div>
+                            {{ render(url('couleur')) }}
                         </div>
-                        {{ render(url('taille')) }}
-
-                        <div class="list-group-item filtreF title">
-                            Couleur
-                        </div>
-                        {{ render(url('couleur')) }}
                     </div>
                 </div>
             </div>

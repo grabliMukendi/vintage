@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="{% block motsCles %}{% endblock %}">
+    <meta name="description" content="{% block description %}{% endblock %}">
+
+    {{ encore_entry_link_tags('app') }}
+
+    <link
+        href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,600,600i,700,700i,900,900i&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap Date Picker Stylesheet -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+    <!-- Ico-moon Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('css/icomoon/style.css') }}">
+    <!-- Personal Stylesheet -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    {{ encore_entry_script_tags('app') }}
+
+    <!-- Bootstrap Date Picker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+    <!-- ElevateZoom JS -->
+    <script src='{{ asset('images/produits/elevatezoom-master/jquery.elevatezoom.js') }}'></script>
+
+    <title>{{ title }}</title>
+</head>
+
+<body id="body__globals">
+    <header>
+        <div id="top" class="top">
+            <div class="profil_icon">
+                {% if app.user %}
+                {{ render(url('user_profile_name')) }}
+                {% else %}
+                <div class="burgerLine" id="burgerLine">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                    Menu
+                </div>
+                {% endif %}
+                <div class="profil">
+                    <ul>
+                        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li>
+                            <a href="{{ path('inscription') }}">Inscription</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('connexion') }}">Connexion</a>
+                        </li>
+                        {% else %}
+                        <li class="role">
+                            <i class="icon-user1"></i>
+                            <strong>Membre</strong>
+                        </li>
+                        <li>
+                            <a href="{{ path('user_profile') }}">
+                                <i class="icon-profile"></i>
+                                Mon Compte
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('commandes_list') }}">
+                                <i class="icon-choices"></i>
+                                Mes commandes
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <hr>
+                        <li class="role">
+                            <a href="{{ path('dashboard') }}">
+                                <i class="icon-business"></i>
+                                Administration
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if app.user %}
+                        <hr>
+                        <li>
+                            <a href="{{ path('deconnexion') }}">
+                                <i class="icon-plug"></i>Déconnexion</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div id="navigator" class="navigator">
+                <div class="navigatorLeft">
+                    <div class="query"  id="query">
+                        <form id="queryForm" action="{{ path('search_products') }}" method="post">
+                            <input type="text" name="query" id="search" placeholder="Rechercher sur Vintage">
+                        </form>
+                        <i class="icon-magnifying-glass searchBtn"></i>
+                        <div id="viewSearch"></div>
+                    </div>
+                </div><!-- navigatorLeft -->
+
+                <div class="navigatorCenter">
+                    <div class="logotype">
+                        <a href="{{ path('home') }}"><img src="{{ asset('photo/logo_vintage_white.svg') }}"
+                                alt="icone membre"></a>
+                    </div>
+                </div><!-- navigatorCenter -->
+
+                <div class="navigatorRight">
+                    <div class="whoWeAre">
+                        <i class="icon-conversation"></i>
+                        <a href="">Qui sommes-nous</a>
+                    </div>
+                    <div class="contact">
+                        <i class="icon-send"></i>
+                        <a href="{{ path('contact') }}">Nous contacter</a>
+                    </div>
+                    <div class="cartIcon">
+                        <a href="{{ path('cart_index') }}">
+                            <div class="panier">
+                                <i class="icon-shopping-bag"></i>
+                                Panier
+                            </div>
+                        </a>
+                        {{ render(url('cart_nb_articles')) }}
+                    </div>
+                </div><!-- navigatorRight -->
+
+            </div>
+            <!-- navigator -->
+        </div><!-- top -->
+
+        <nav id="navBar">
+            <div class="container">
+                <ul id="navigation" class="navigation">
+                    <li>
+                        <a class="{{ (title == 'Acceuil') ? 'navActive' : '' }}" href="{{ path('home') }}">Accueil</a>
+                    </li>
+                    <li>
+                        <a class="{{ (title == 'Tendance') ? 'navActive' : '' }}"
+                            href="{{ path('rubrique_tendance') }}">Tendance</a>
+                    </li>
+                    <li>
+                        <a class="{{ (title == 'Art déco') ? 'navActive' : '' }}"
+                            href="{{ path('rubrique_art_deco') }}">Art déco</a>
+                    </li>
+                    <li>
+                        <a class="{{ (title == 'Automobile') ? 'navActive' : '' }}"
+                            href="{{ path('rubrique_automobile') }}">Automobile</a>
+                    </li>
+                    <li>
+                        <a class="{{ (title == 'Sport et loisir') ? 'navActive' : '' }}"
+                            href="{{ path('rubrique_sport_loisir') }}">Sport & Loisir</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+    </header>
+    <div class="scrollBtn">
+        <div class="scroller">
+            <i class="icon-previous"></i>
+        </div>
+        <div class="textScroll">Retour en haut</div>
+    </div>
+    <main>
+        <br>
+        <br>
+        <br>
+        <div class="{{ title not in [ 'Acceuil', 'Connexion', 'Inscription' ] ? 'main__fondo' : '' }}">
+            {% block main %}
+
+            {% block contentFluid %}{% endblock %}
+
+            <div class="container content">
+
+                <div class="loader">
+                    <div class="spinLoader">
+                        <img src="{{ asset('photo/loader.svg') }}" alt="loader vintage">
+                    </div>
+                </div>
+
+                {% for message in app.flashes('success') %}
+                <div class="alert alert-success mb-4">{{ message | raw }}</div>
+                {% endfor %}
+
+                {% for message in app.flashes('errors') %}
+                <div class="alert alert-danger mb-4">{{ message | raw }}</div>
+                {% endfor %}
+
+                {% block content %}{% endblock %}
+
+            </div>
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container pied">
+            <div>
+                <a href="">Conditions générales de vente</a>
+            </div>
+            <div>
+                <a href="">Mentions légales</a>
+            </div>
+            <div class="socialMedia">
+                <span>Rejoignez-nous sur</span>
+                <a href="">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+            <div class="vintage">&copy;
+                {{ 'now' | date('Y') }}, Vintage.fr | Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.onload = () => {
+            let spin = document.querySelector('.spinLoader').style;
+            spin.opacity = 1;
+            spin.pointerEvents = 'none';
+
+            function fade() {
+                spin.opacity = 0;
+            }
+
+            setTimeout(fade, 500);
+        }
+
+        $(function () {
+            function changeHeaderAspect() {
+                $(window).on('scroll', () => 
+                {
+                    if ($(window).scrollTop() > 30) {
+                        $('.logotype a img').attr('src', '../../photo/logo_vintage.svg');
+                        $('.burgerLine').css('color', 'inherit');
+                        $('.navigator').css('color', 'inherit');
+                        $('nav').css(
+                            {
+                                color: 'inherit',
+                                backgroundColor: '#fff'
+                            });
+                        $('.burgerLine div').css('backgroundColor', 'rgb(43, 42, 59)');
+                        $('.query').css('display', 'flex');
+                        $('.navActive').css('color', '#DF4949');
+                        $('.top').css(
+                            {
+                                borderBottom: '1px solid #ced4da',
+                                backgroundColor: '#fff'
+                            });
+                        $('nav').css('boxShadow', '0 1px 3px rgb(205, 205, 205)');
+                        $('.panier').css(
+                            {
+                                border: '1px solid #DF4949',
+                                color: '#DF4949',
+                            });
+
+                        /************** Effet d'hover sur Qui sommes-nous et Contact ? **************/
+                        $('.panier').mouseover(() => {
+                            $('.panier').css('color', '#fff');
+                        });
+                        $('.whoWeAre a').mouseover(() => {
+                            $('.whoWeAre a').css('color', '#DF4949');
+                            $('.whoWeAre i').css('color', '#DF4949');
+                        });
+                        $('.whoWeAre a').mouseout(() => {
+                            $('.whoWeAre a').css('color', '');
+                            $('.whoWeAre i').css('color', '');
+                        });
+
+                        $('.contact a').mouseover(() => {
+                            $('.contact a').css('color', '#DF4949');
+                            $('.contact i').css('color', '#DF4949');
+                        });
+                        $('.contact a').mouseout(() => {
+                            $('.contact a').css('color', '');
+                            $('.contact i').css('color', '');
+                        });
+
+                        /************** Fin d'effet d'hover sur submenu ? **************/
+                        $('#navigation li').each((key, value) => {
+                            $(value).mouseover(() => {
+                                link = $(value).children();
+                                $(link).not(this).css('color', '');
+                                $(link).css('color', '#DF4949');
+                            });
+                            $(value).mouseout(() => {
+                                $(link).css('color', '');
+                            });
+                        });
+                    }
+                    else {
+                        $('.logotype a img').attr('src', '../../photo/logo_vintage_white.svg');
+                        $('.burgerLine').css('color', '');
+                        $('.navigator').css('color', '');
+                        $('nav').css(
+                            {
+                                color: '',
+                                backgroundColor: ''
+                            });
+                        $('.burgerLine div').css('backgroundColor', '');
+                        $('.query').css('display', '');
+                        $('.navActive').css('color', '');
+                        $('.top').css(
+                            {
+                                borderBottom: '',
+                                backgroundColor: ''
+                            });
+                        $('nav').css('boxShadow', '');
+                        $('.panier').css(
+                            {
+                                border: '',
+                                color: '',
+                            });
+
+                        /************** Effet d'hover sur Qui sommes-nous et Contact ? **************/
+                        $('.panier').mouseout(() => {
+                            $('.panier').css('color', '#DF4949');
+                        });
+                        $('.whoWeAre a').mouseover(() => {
+                            $('.whoWeAre a').css('color', '');
+                            $('.whoWeAre i').css('color', '');
+                        });
+                        $('.whoWeAre a').mouseout(() => {
+                            $('.whoWeAre a').css('color', '');
+                            $('.whoWeAre i').css('color', '');
+                        });
+
+                        $('.contact a').mouseover(() => {
+                            $('.contact a').css('color', '');
+                            $('.contact i').css('color', '');
+                        });
+                        $('.contact a').mouseout(() => {
+                            $('.contact a').css('color', '');
+                            $('.contact i').css('color', '');
+                        });
+
+                        /************** Fin d'effet d'hover sur submenu ? **************/
+                        $('#navigation li').each((key, value) => {
+                            $(value).mouseover(() => {
+                                link = $(value).children();
+                                $(link).not(this).css('color', '');
+                                $(link).css('color', '#fff');
+                            });
+                            $(value).mouseout(() => {
+                                $(link).css('color', '');
+                            });
+                        });
+                    }
+                });
+            }
+            changeHeaderAspect();
+
+        });
+
+    </script>
+
+    {% block javascripts %}{% endblock %}
+</body>
+
+</html>

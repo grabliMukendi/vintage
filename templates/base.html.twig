@@ -29,14 +29,14 @@
 
 		<title>{{ title }}</title>
 	</head>
-	<body id="body__globals">
-		<header>
+	<body>
+		<header id="header__global">
 			<div class="top">
 				<div class="profil_icon">
 					{% if app.user %}
 					{{ render(url('user_profile_name')) }}
 					{% else %}
-					<div class="burgerLine">
+					<div class="burgerLine__global">
 						<div class="line1"></div>
 						<div class="line2"></div>
 						<div class="line3"></div>
@@ -102,22 +102,22 @@
 	
 					<div class="navigatorCenter">
 						<div class="logotype">
-							<a href="{{ path('home') }}"><img src="{{ asset('photo/logo_vintage_white.svg') }}" alt="icone membre"></a>
+							<a href="{{ path('home') }}"><img src="{{ asset('photo/logo_vintage.svg') }}" alt="logo vintage"></a>
 						</div>
 					</div><!-- navigatorCenter -->
 	
 					<div class="navigatorRight">
-						<div class="whoWeAre">
+						<div class="who__global">
 							<i class="icon-conversation"></i>
 							<a href="">Qui sommes-nous</a>
 						</div>
-						<div class="contact">
+						<div class="contact__global">
 							<i class="icon-send"></i>
 							<a href="{{ path('contact') }}">Nous contacter</a>
 						</div>
 						<div class="cartIcon">
 							<a href="{{ path('cart_index') }}">
-								<div class="panier">
+								<div class="panier__global">
 									<i class="icon-shopping-bag"></i>
 									Panier
 								</div>
@@ -134,19 +134,19 @@
 				<div class="container">
 					<ul class="navigation">
 						<li>
-							<a class="{{ (title == 'Acceuil') ? 'navActive' : '' }}" href="{{ path('home') }}">Accueil</a>
+							<a class="{{ (title == 'Acceuil') ? 'nav__active__global' : '' }}" href="{{ path('home') }}">Accueil</a>
 						</li>
 						<li>
-							<a class="{{ (title == 'Tendance') ? 'navActive' : '' }}" href="{{ path('rubrique_tendance') }}">Tendance</a>
+							<a class="{{ (title == 'Tendance') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_tendance') }}">Tendance</a>
 						</li>
 						<li>
-							<a class="{{ (title == 'Art déco') ? 'navActive' : '' }}" href="{{ path('rubrique_art_deco') }}">Art déco</a>
+							<a class="{{ (title == 'Art déco') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_art_deco') }}">Art déco</a>
 						</li>
 						<li>
-							<a class="{{ (title == 'Automobile') ? 'navActive' : '' }}" href="{{ path('rubrique_automobile') }}">Automobile</a>
+							<a class="{{ (title == 'Automobile') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_automobile') }}">Automobile</a>
 						</li>
 						<li>
-							<a class="{{ (title == 'Sport et loisir') ? 'navActive' : '' }}" href="{{ path('rubrique_sport_loisir') }}">Sport & Loisir</a>
+							<a class="{{ (title == 'Sport et loisir') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_sport_loisir') }}">Sport & Loisir</a>
 						</li>
 					</ul>
 				</div>
@@ -161,34 +161,30 @@
 		</div>
 		<main>
 			<br>
-			<br>
-			<br>
-			<div class="{{ title not in [ 'Acceuil', 'Connexion', 'Inscription' ] ? 'main__fondo' : '' }}">
-				{% block main %}
+			{% block main %}
 
-					{% block contentFluid %}{% endblock %}
+				{% block contentFluid %}{% endblock %}
 
-					<div class="container content">
-	
-						<div class="loader">
-							<div class="spinLoader">
-								<img src="{{ asset('photo/loader.svg') }}" alt="loader vintage">
-							</div>
+				<div class="container content">
+
+					<div class="loader">
+						<div class="spinLoader">
+							<img src="{{ asset('photo/loader.svg') }}" alt="loader vintage">
 						</div>
-	
-						{% for message in app.flashes('success') %}
-							<div class="alert alert-success mb-4">{{ message | raw }}</div>
-						{% endfor %}
-	
-						{% for message in app.flashes('errors') %}
-							<div class="alert alert-danger mb-4">{{ message | raw }}</div>
-						{% endfor %}
-	
-						{% block content %}{% endblock %}
-	
 					</div>
-				{% endblock %}
-			</div>
+
+					{% for message in app.flashes('success') %}
+						<div class="alert alert-success mb-4">{{ message | raw }}</div>
+					{% endfor %}
+
+					{% for message in app.flashes('errors') %}
+						<div class="alert alert-danger mb-4">{{ message | raw }}</div>
+					{% endfor %}
+
+					{% block content %}{% endblock %}
+
+				</div>
+			{% endblock %}
 		</main>
 
 		<footer>
@@ -237,130 +233,41 @@
 
 			$(function() 
 			{
-				function changeHeaderAspect() 
+				function burgerLineGlobal() 
 				{
-					$(window).on('scroll', () => {
-						if ($(window).scrollTop() > 30) 
-						{
-							$('.logotype a img').attr('src', '../../photo/logo_vintage.svg');
-							$('.burgerLine').css('color', 'inherit');
-							$('.navigator').css('color', 'inherit');
-							$('nav').css(
-							{
-								color : 'inherit',
-								backgroundColor : '#fff'
-							});
-							$('.burgerLine div').css('backgroundColor', 'rgb(43, 42, 59)');
-							$('.query').css('display', 'flex');
-							$('.navActive').css('color', '#DF4949');
-							$('.top').css(
-							{
-								borderBottom : '1px solid #ced4da',
-								backgroundColor: '#fff'
-							});
-							$('nav').css('boxShadow', '0 1px 3px rgb(205, 205, 205)');
-							$('.panier').css(
-							{
-								border	: '1px solid #DF4949',
-								color	: '#DF4949',
-							});
+					$('.burgerLine__global').mouseenter(() => 
+					{
+						$('.burgerLine__global').toggleClass('toggleBurger');
+					});
 
-							/************** Effet d'hover sur Qui sommes-nous et Contact ? **************/
-							$('.panier').mouseover(() => {
-								$('.panier').css('color', '#fff');
-							});
-							$('.whoWeAre a').mouseover(() => {
-								$('.whoWeAre a').css('color', '#DF4949');
-								$('.whoWeAre i').css('color', '#DF4949');
-							});
-							$('.whoWeAre a').mouseout(() => {
-								$('.whoWeAre a').css('color', '');
-								$('.whoWeAre i').css('color', '');
-							});
-
-							$('.contact a').mouseover(() => {
-								$('.contact a').css('color', '#DF4949');
-								$('.contact i').css('color', '#DF4949');
-							});
-							$('.contact a').mouseout(() => {
-								$('.contact a').css('color', '');
-								$('.contact i').css('color', '');
-							});
-
-							/************** Fin d'effet d'hover sur submenu ? **************/
-							$('.navigation li').each((key, value) => {
-								$(value).mouseover(() => {
-									link = $(value).children();
-									$(link).not(this).css('color', '');
-									$(link).css('color', '#DF4949');
-								});
-								$(value).mouseout(() => {
-									$(link).css('color', '');
-								});
-							});
-						} 
-						else 
-						{
-							$('.logotype a img').attr('src', '../../photo/logo_vintage_white.svg');
-							$('.burgerLine').css('color', '');
-							$('.navigator').css('color', '');
-							$('nav').css(
-							{
-								color : '',
-								backgroundColor : ''
-							});
-							$('.burgerLine div').css('backgroundColor', '');
-							$('.query').css('display', '');
-							$('.navActive').css('color', '');
-							$('.top').css(
-							{
-								borderBottom : '',
-								backgroundColor: ''
-							});
-							$('nav').css('boxShadow', '');
-							$('.panier').css(
-							{
-								border: '',
-								color: '',
-							});
-
-							/************** Effet d'hover sur Qui sommes-nous et Contact ? **************/
-							$('.panier').mouseout(() => {
-								$('.panier').css('color', '#DF4949');
-							});
-							$('.whoWeAre a').mouseover(() => {
-								$('.whoWeAre a').css('color', '');
-								$('.whoWeAre i').css('color', '');
-							});
-							$('.whoWeAre a').mouseout(() => {
-								$('.whoWeAre a').css('color', '');
-								$('.whoWeAre i').css('color', '');
-							});
-
-							$('.contact a').mouseover(() => {
-								$('.contact a').css('color', '');
-								$('.contact i').css('color', '');
-							});
-							$('.contact a').mouseout(() => {
-								$('.contact a').css('color', '');
-								$('.contact i').css('color', '');
-							});
-
-							/************** Fin d'effet d'hover sur submenu ? **************/
-							$('.navigation li').each((key, value) => {
-								$(value).mouseover(() => {
-									link = $(value).children();
-									$(link).not(this).css('color', '');
-									$(link).css('color', '#fff');
-								});
-								$(value).mouseout(() => {
-									$(link).css('color', '');
-								});
-							});
-						}
+					$('.burgerLine__global').mouseleave(() => 
+					{
+						$('.burgerLine__global').toggleClass('toggleBurger');
 					});
 				}
-				changeHeaderAspect();
+				burgerLineGlobal();
+
+				function contactWhoWeAre() 
+				{
+					$('.who__global a').mouseover(() => 
+					{
+						$('.who__global i').css('color', '#DF4949');
+					});
+					$('.who__global a').mouseout(() => 
+					{
+						$('.who__global i').css('color', '');
+					});
+	
+					$('.contact__global a').mouseover(() => 
+					{
+						$('.contact__global i').css('color', '#DF4949');
+					});
+					$('.contact__global a').mouseout(() => 
+					{
+						$('.contact__global i').css('color', '');
+					});
+				}
+				contactWhoWeAre();
 
 			});
 

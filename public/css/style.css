@@ -94,6 +94,9 @@ header {
     width: 100%;
     z-index: 9998;
 }
+#header__global {
+    background-color: #fff;
+}
 .top {
     padding: 0 48px;
     min-height: 70px;
@@ -210,6 +213,18 @@ header {
    color: #DF4949;
 }
 /* Menu Burger */
+.burgerLine__global{
+    cursor: pointer;
+    font-size: .8em;
+    position: relative;
+}
+.burgerLine__global div {
+    width: 36px;
+    height: 2px;
+    background-color: rgb(43, 42, 59);
+    margin: 6px 6px 6px 0;
+    transition: all .5s;
+}
 .burgerLine{
     cursor: pointer;
     font-size: .8em;
@@ -218,7 +233,7 @@ header {
 .burgerLine div {
     width: 36px;
     height: 2px;
-    background-color: rgb(43, 42, 59);
+    background-color: #fff;
     margin: 6px 6px 6px 0;
     transition: all .5s;
 }
@@ -337,6 +352,65 @@ header {
     text-decoration: none;
     color: #DF4949;
 }
+.who__global {
+    text-align: center;
+}
+.who__global a {
+    font-size: .8em;
+    color: inherit;
+    display: block;
+    transition: ease .5s;
+    position: relative;
+}
+.who__global a::before {
+    position: absolute;
+    content: '';
+    top: 150%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 0;
+    height: 2px;
+    background-color: #DF4949;
+    transition: ease .5s;
+}
+.who__global a:hover::before {
+    width: 100%;
+}
+.who__global a:hover {
+    text-decoration: none;
+    color: #DF4949;
+}
+.contact__global {
+    text-align: center;
+    margin-left: 1.35em;
+}
+.contact__global a {
+    font-size: .8em;
+    color: inherit;
+    display: block;
+    transition: ease .5s;
+    position: relative;
+}
+.contact__global a::before {
+    position: absolute;
+    content: '';
+    top: 150%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 0;
+    height: 2px;
+    background-color: #DF4949;
+    transition: ease .5s;
+}
+.contact__global a:hover::before {
+    width: 100%;
+}
+.contact__global a:hover {
+    text-decoration: none;
+    color: #DF4949;
+}
 .cartIcon {
     position: relative;
 }
@@ -362,6 +436,25 @@ header {
     border: 1px solid #F76464;
     color: #fff;
 }
+.panier__global {
+    width: 92px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #DF4949;
+    color: #DF4949;
+    font-weight: 500;
+    margin-left: 1.35em;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: ease .5s;
+}
+.panier__global:hover {
+    background-color: #F76464;
+    border: 1px solid #F76464;
+    color: #fff;
+}
 .badgeCart {
     min-width: 18px;
     min-height: 18px;
@@ -378,7 +471,7 @@ header {
 }
 
 nav {
-    box-shadow: 0 1px 3px rgb(205, 205, 205);
+    box-shadow: 0 2px 3px rgb(205, 205, 205);
 }
 .navigation {
     display: flex;
@@ -430,6 +523,20 @@ nav {
 /*
     Créaton de la classe active
 */
+.nav__active__global {
+    font-weight: 700 !important;
+    color: #DF4949 !important;
+    position: relative;
+}
+.nav__active__global::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 2px;
+    left: 0;
+    bottom: -100%;
+    background-color: #DF4949;
+}
 .navActive {
     font-weight: 700 !important;
     color: #DF4949;
@@ -935,12 +1042,6 @@ nav {
     border: 0;
     background-color: none !important;
 }
-.filtreCroissant:first-child {
-    border-bottom: 1px solid rgba(0,0,0,.125);
-}
-.filtreCroissant:last-child {
-    border-top: 1px solid rgba(0,0,0,.125);
-}
 .filtreCroissantParent {
     position: absolute;
     top: 100%;
@@ -956,6 +1057,9 @@ nav {
 }
 .priceFilter {
     height: auto !important;
+}
+.priceFilter a:last-child {
+    border-top: 1px solid rgba(0,0,0,.125);
 }
 .wrapper {
     position: relative;
@@ -2014,13 +2118,10 @@ ul#produits-image-fields-list {
     background-size: cover;
     background-position-x: center;
 }
-.burgerLine, .navigator, nav {
+#burgerLine, #navigator, #navBar {
     color: #fff;
 }
-.burgerLine div {
-    background-color: #fff;
-}
-.query {
+#query {
     display: none;
 }
 .navActive {
@@ -2029,10 +2130,10 @@ ul#produits-image-fields-list {
 .toggleNavActive {
     background-color: #DF4949;
 }
-.top {
+#top {
     border-bottom: none;
 }
-nav {
+#navBar {
     box-shadow: none;
 }
 .panier {

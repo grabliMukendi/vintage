@@ -55,7 +55,7 @@ $(function () {
     });
 
     /************** Fin d'effet d'hover sur submenu ? **************/
-    $('.navigation li').each((key, value) => {
+    $('#navigation li').each((key, value) => {
         $(value).mouseover(() => {
             link = $(value).children();
             $(link).not(this).css('color', '');
