@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="keywords" content="{% block motsCles %}{% endblock %}">
+        <meta name="description" content="{% block description %}{% endblock %}">
+        
+        {{ encore_entry_link_tags('app') }}
+        
+        <link
+            href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,500,500i,600,600i,700,700i,900,900i&display=swap"
+            rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:400,600&display=swap" rel="stylesheet">
+        
+        <!-- Bootstrap Date Picker Stylesheet -->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+        <!-- Ico-moon Stylesheet -->
+        <link rel="stylesheet" href="{{ asset('css/icomoon/style.css') }}">
+        <!-- Personal Stylesheet -->
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        
+        {{ encore_entry_script_tags('app') }}
+    
+        <title>Page d'erreur 403</title>
+    </head>
+</head>
+<body class="errors403__body">
+    
+    <div class="text-center error__content">
+        <h1 class="title mt-4">Erreur 403</h1>
+        <p class="mt-2 mb-4"><strong>Désolé !</strong><br> Vous n'avez pas l'autorisation d'accéder à la page demandée.</p>
+        <a class="btn btnSuccess2" href="{{ path('home') }}">RETOUR À LA PAGE D'ACCUEIL</a>
+    </div>
+</body>
+</html>

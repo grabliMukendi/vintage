@@ -2117,6 +2117,46 @@ nav {
     right: 1rem !important;
 }
 /* avatarModal */
+/* errors */
+.errors403__body {
+    padding: 0;
+    margin: 0;
+    background: url('../photo/bgi_errors403.jpg') no-repeat;
+    background-size: cover;
+    background-position-x: center;
+}
+.errors404__body {
+    padding: 0;
+    margin: 0;
+    background: url('../photo/bgi_errors404.jpg') no-repeat;
+    background-size: cover;
+    background-position-x: center;
+}
+.error__content {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10em;
+    color: #fff;
+}
+.error__content h1 {
+    letter-spacing: 1px;
+}
+.error__content p {
+    font-size: 1.65em;
+    font-weight: 300;
+}
+.error__content a {
+    letter-spacing: 1.35px;
+    font-size: 0.85em;
+    font-weight: 600 !important;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+/* errors */
 
 
 
