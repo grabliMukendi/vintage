@@ -120,6 +120,30 @@
             </div>
         </div>
     </div><!-- row -->
+    
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-4 ico__dashboard">
+                            <img class="img-fluid" src="{{ asset('photo/article.svg') }}" alt="conversation">
+                        </div>
+                        <div class="col-8">
+                            <span class="h5 text-muted mb-0">
+                                {% if stats.articles == 1 %}
+                                    {{ stats.articles }} article
+                                {% else %}
+                                    {{ stats.articles }} articles
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- row -->
     <hr>
     <div class="mt-4">
         <h4 class="title">Meilleures ventes</h4>

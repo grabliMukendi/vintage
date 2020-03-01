@@ -9,23 +9,38 @@ $(function () {
 
     function showProfil() 
     {
-        $('.profil_icon').mouseenter(() => 
+        if ($(window).width() > 992) 
         {
-            $('.profil').css({
-                transform: 'translateY(0)',
-                opacity: 1,
-                pointerEvents: 'all'
+            $('.profil_icon').mouseenter(() => 
+            {
+                $('.profil').css({
+                    transform: 'translateY(0)',
+                    opacity: 1,
+                    pointerEvents: 'all'
+                });
             });
-        });
+    
+            $('.profil_icon').mouseleave(() => 
+            {
+                $('.profil').css({
+                    transform: '',
+                    opacity: '',
+                    pointerEvents: ''
+                });
+            });
+        }
 
-        $('.profil_icon').mouseleave(() => 
+        if ($(window).width() < 992) 
         {
-            $('.profil').css({
-                transform: '',
-                opacity: '',
-                pointerEvents: ''
+            $('#open__profile__user__js').click(() => 
+            {
+                $('.profil').css({
+                    transform: 'translateY(0)',
+                    opacity: 1,
+                    pointerEvents: 'all'
+                });
             });
-        });
+        }
     }
     showProfil();
 
@@ -68,36 +83,75 @@ $(function () {
 
     /************** Fin d'effet d'hover sur Qui sommes-nous et Contact ? **************/
 
-    function showRecherche() {
-        $('#search').on('keyup', () => {
-            $('#viewSearch').fadeIn();
-            $('.query').css({
-                borderRadius: '3px 3px 0 0'
+    function showRecherche() 
+    {
+        if ($(window).width() < 992) 
+        {
+            $('.close__form__mobile').click(() => 
+            {
+                $('.query__block').fadeOut();
             });
 
-            //let saisie = $('#search').val();
-            let url = $('#queryForm').attr('action');
-            let data = $('#queryForm').serialize();
+            $('#search').on('keyup', () => 
+            {
+                $('#viewSearch').fadeIn();
 
-            $.ajax({
-                method: 'post',
-                url: url,
-                data: data,
-                dataType: 'json',
-                success: (response) => {
-                    if(response.success) 
-                    {
-                        $('#viewSearch').html(response.results);
+                //let saisie = $('#search').val();
+                let url = $('#queryForm').attr('action');
+                let data = $('#queryForm').serialize();
+
+                $.ajax({
+                    method: 'post',
+                    url: url,
+                    data: data,
+                    dataType: 'json',
+                    success: (response) => {
+                        if (response.success) {
+                            $('#viewSearch').html(response.results);
+                        }
+                        if (response.errors) {
+                            $('#viewSearch').html('<div class="alert alert-danger">' + response.errors + '</div>');
+                        }
+
                     }
-                    if(response.errors) 
-                    {
-                        $('#viewSearch').html('<div class="alert alert-danger">'+ response.errors +'</div>');
-                    }
-                    
-                }
+                });
+
             });
-            
-        });
+        }
+
+        if ($(window).width() > 992) 
+        {
+            $('#search').on('keyup', () => 
+            {
+                $('#viewSearch').fadeIn();
+                $('.query').css({
+                    borderRadius: '3px 3px 0 0'
+                });
+    
+                //let saisie = $('#search').val();
+                let url = $('#queryForm').attr('action');
+                let data = $('#queryForm').serialize();
+    
+                $.ajax({
+                    method: 'post',
+                    url: url,
+                    data: data,
+                    dataType: 'json',
+                    success: (response) => {
+                        if(response.success) 
+                        {
+                            $('#viewSearch').html(response.results);
+                        }
+                        if(response.errors) 
+                        {
+                            $('#viewSearch').html('<div class="alert alert-danger">'+ response.errors +'</div>');
+                        }
+                        
+                    }
+                });
+                
+            });
+        }
 
         $('#search').on('blur', () => {
             $('#viewSearch').fadeOut();
@@ -132,7 +186,8 @@ $(function () {
     }
     connectFormSubmit();
 
-    function confirmDelete() {
+    function confirmDelete() 
+    {
         $('.confirm').click(() => {
             return confirm('Êtes-vous certain de vouloir supprimer ce produit ?');
         });
@@ -669,6 +724,57 @@ $(function () {
 
     }
     dashboard();
+
+    if ($(window).width() < 992) 
+    {
+        function burger() 
+        {
+            // click on burger
+            let burgerBtn = $('#burgerLine__mobile');
+            let profileBtn = $('#open__profile__user__js');
+            let top = $('#top');
+
+            burgerBtn.click(() => 
+            {
+                $('.navigation').toggleClass('nav__items__active');
+                $(burgerBtn).toggleClass('toggleBurger__mobile');
+            });
+
+            // Apparution des liens du ménu
+            let liensNav = $('.navigation li');
+            liensNav.each((indice, lien) => 
+            {
+                if ($(lien).css.animation) 
+                {
+                    $(lien).css({
+                        animation: ''
+                    });
+                } else {
+                    $(lien).css({
+                        animation: `liensMenuFade 1s ease forwards ${indice / 10 + 1.5}s`
+                    });
+                }
+            });
+
+            profileBtn.click(() => 
+            {
+
+            });
+
+        }
+        burger();
+
+        function showSearchBar() 
+        {
+            $('.ico__form__mobile__js').click(() => 
+            {
+                $('.query__block').fadeIn();
+                console.log('Bolok est muerte');
+                
+            });
+        }
+        showSearchBar();
+    }
 
     /*window.addEventListener('scroll', function() {
         let scrolled = this.scrollY;

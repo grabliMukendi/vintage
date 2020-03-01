@@ -1,0 +1,102 @@
+{% extends 'admin/base.html.twig' %}
+
+{% set title = 'Ajout et modification des articles' %}
+
+{% block content %}
+
+<div class="mb-4 dash__returned">
+    <i class="icon-returned mr-2"></i>
+    <a href="{{ path('article_list') }}">Retour</a>
+</div><br>
+
+<h3 class="leadTitleLeft">{{ action }} un article</h3><br><br>
+
+{% form_theme form _self %}
+
+{{ form_start(form) }}
+
+{{ form_rest(form) }}
+
+<input type="hidden" id="tmpl__counter" value="0">
+{% if action == 'Ajouter' %}
+<div class="row justify-content-md-center">
+    <button type="submit" class="btn btnSubmit" style="min-width:200px;">Ajouter l'article !</button>
+</div>
+{% else %}
+<div class="row justify-content-md-center">
+    <button type="submit" class="btn btnSubmit" style="min-width:200px;">Modifier l'article !</button>
+</div>
+{% endif %}
+
+{{ form_end(form) }}
+
+{% endblock %}
+
+{% block _articles_contents_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _articles_contents_entry_widget %}
+    <div class="form-group" id="block_{{ id }}">
+        <div class="row">
+            <div class="col-11">
+                {{ form_widget(form) }}
+            </div>
+            <div class="col-1 mt-4">
+                <button type="button" data-action="delete" data-target="block_{{id}}" class="btn btnSubmit">
+                    <i class="icon-garbage"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block _articles_contents_widget %}
+    <p>Ici, vous pouvez ajouter le contenu de votre article !</p>
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <button type="button" id="add__contents" class="btn btnSuccess2">Ajouter un conténu</button>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        $(function() 
+        {
+            $('#add__contents').click(() => 
+            {
+                // Récupération des numéros des futurs champs à créer
+                const index = parseInt($('#tmpl__counter').val());
+                //console.log(index);
+                // Récupération du prototype des entrées
+                const tmpl = $('#articles_contents').data('prototype').replace(/__name__/g, index);
+
+                // Injection du template dans la div
+                $('#articles_contents').append(tmpl);
+                $('#tmpl__counter').val(index + 1);
+
+                // Appel de la fonction de suppression du tmpl
+                deleteTemplate();
+            });
+
+            function deleteTemplate() 
+            {
+                $('button[data-action="delete"]').each((key, btn) => 
+                {
+                    $(btn).click(() => 
+                    {
+                        const data = $(btn).data('target');
+                        const blockDel = $(btn).parent().parent().parent().attr('id', data);
+
+                        $(blockDel).remove();
+                        console.log('Block "'+ data +'" removed successfully !');
+                    });
+                });
+            }
+            deleteTemplate();
+
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'admin/base.html.twig' %}
+
+{% set title = 'Ajout et modification des articles' %}
+
+{% block content %}
+
+<div class="row">
+    <h3 class="leadTitleLeft2 col-md-8">Gestion des articles</h3>
+    <div class="col-md-4">
+        <a class="btn btnSubmit col-12" href="{{ path('article_add') }}">Ajouter un article</a>
+    </div>
+</div><br><br>
+{% if articles is not empty %}
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Sous-titres</th>
+            <th>Date de création</th>
+            <th colspan="2">Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            <td>
+                {{ article.title }}
+            </td>
+            <td>
+                <ul class="check__list__ico">
+                    {% for content in article.contents %}
+                        <li>{{ content.title }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>{{ article.createdAt | date('d/m/Y') }}</td>
+
+            <td>
+                <a href="{{ path('article_update', { id : article.id }) }}">
+                    <i class="icon-edit"></i>
+                </a>
+            </td>
+            <td>
+                <a class="delete__article__confirm" href="{{ path('article_delete', { id : article.id }) }}">
+                    <i class="icon-garbage"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-danger">
+    <strong>Désolé !</strong>
+    Il n'existe aucun article pour l'instant. Veuillez en ajouter.</div>
+{% endif %}
+
+{#{ produits.display }#}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function() 
+        {
+
+            function deleteConfirm() 
+            {
+                $('.delete__article__confirm').click(() => {
+                    return confirm('Êtes-vous certain de vouloir supprimer cet article ?');
+                });
+            }
+            deleteConfirm();
+        })
+    </script>
+{% endblock %}
+

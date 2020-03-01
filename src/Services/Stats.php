@@ -18,8 +18,9 @@ class Stats
         $users          = $this->getUsersCount();
         $comments       = $this->getCommentsCount();
         $remises       = $this->getRemisesCount();
+        $articles       = $this->getArticlesCount();
 
-        return compact('users', 'comments', 'remises');
+        return compact('users', 'comments', 'remises', 'articles');
     }
 
     public function getUsersCount() 
@@ -35,6 +36,11 @@ class Stats
     public function getRemisesCount() 
     {
         return $this->manager->createQuery('SELECT count(r) FROM App\Entity\Promotion r')->getSingleScalarResult();
+    }
+
+    public function getArticlesCount() 
+    {
+        return $this->manager->createQuery('SELECT count(a) FROM App\Entity\Articles a')->getSingleScalarResult();
     }
 
 }

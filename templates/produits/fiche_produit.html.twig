@@ -44,29 +44,31 @@
 		</div>
 		<div class="col-md-7">
 			<h4 class="title">{{ produit.titre | upper }}</h4>
-			<div class="ratingsSuccess mt-1 mb-2">
-				{% if produit.comments | length != null %}
-					{% include 'partials/ratings.html.twig' with { 'rating' : produit.avgRatings } %}
-					<span class="ml-2 avisProduct__js">
-						<a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}">{{ produit.comments | length }} évaluation{{ produit.comments | length > 1 ? 's' : '' }}</a>
-					</span>
+			<div class="price__rating__promo">
+				<div class="ratingsSuccess mt-1 mb-2">
+					{% if produit.comments | length != null %}
+						{% include 'partials/ratings.html.twig' with { 'rating' : produit.avgRatings } %}
+						<span class="ml-2 avisProduct__js">
+							<a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}">{{ produit.comments | length }} évaluation{{ produit.comments | length > 1 ? 's' : '' }}</a>
+						</span>
+					{% endif %}
+				</div>
+				<p class="priceBig">
+					{% if produit.promotion | length != null %}
+						{% set prixTTC = produit.prix | tva(produit.tva.multiplicate) %}
+						
+						{{ prixTTC | promo( produit.promotion.remise) | price_format(produit.prix, ',', ' ') }} €
+					{% else %}
+						{{ produit.prix | tva(produit.tva.multiplicate) | price_format(produit.prix, ',', ' ') }} €
+					{% endif %}
+				</p>
+				{% if produit.promotion | length != null %}
+					<div class="promotion">
+						<span class="priceReduced">{{ produit.prix | tva(produit.tva.multiplicate) | price_format(produit.prix, ',', ' ') }}€</span><br>
+						<small class="alert-success px-2 py-1">-{{ produit.promotion.remise }}%</small>
+					</div>
 				{% endif %}
 			</div>
-			<p class="priceBig">
-				{% if produit.promotion | length != null %}
-					{% set prixTTC = produit.prix | tva(produit.tva.multiplicate) %}
-					
-					{{ prixTTC | promo( produit.promotion.remise) | price_format(produit.prix, ',', ' ') }} €
-				{% else %}
-					{{ produit.prix | tva(produit.tva.multiplicate) | price_format(produit.prix, ',', ' ') }} €
-				{% endif %}
-			</p>
-			{% if produit.promotion | length != null %}
-				<div class="promotion">
-					<span class="priceReduced">{{ produit.prix | tva(produit.tva.multiplicate) | price_format(produit.prix, ',', ' ') }}€</span><br>
-					<small class="alert-success px-2 py-1">-{{ produit.promotion.remise }}%</small>
-				</div>
-			{% endif %}
 			<!--div class="breakGradient">Lire la suite</div-->
 			<p class="desc mb-4">{{ produit.description | raw }}</p>
 			<!--div id="gradient"></div-->
@@ -132,7 +134,7 @@
 						<div class="col-md-8">
 							Note globale donnée par nos acheteurs <br>
 						</div>
-						<div class="col-md-4 text-right">
+						<div class="col-md-4 rate__comment text-right">
 							{% include "partials/ratings.html.twig" with { 'rating' : produit.avgRatings } %}<br>
 							<small>(Calculée sur {{ produit.comments | length }} avis)</small>
 						</div>
@@ -142,16 +144,11 @@
 			{% for comment in produit.comments %}
 				<div class="commentsBlock mb-4">
 					<div class="commentAvatar bg-light mr-4">
-						{% if comment.author.userAdress is empty %}
+						{% if comment.author.userAdress.avatar == 'default_avatar' %}
 							<img src="{{ asset('photo/user.svg') }}" alt="{{ comment.produit.titre }}" class="img-fluid userEmpty">
-						{% endif %}
 
-						{% if comment.author.userAdress is not empty and comment.author.userAdress.avatar == null %}
-							<img src="{{ asset('photo/user.svg') }}" alt="{{ comment.produit.titre }}" class="img-fluid userEmpty">
-						{% endif %}
-
-						{% if comment.author.userAdress is not empty and comment.author.userAdress.avatar != null %}
-							<img src="{{ asset('images/produits/' ~ comment.author.userAdress.avatar) }}" alt="{{ comment.produit.titre }}" class="img-fluid">
+						{% else %}
+							<img src="{{ asset('images/avatars/' ~ comment.author.userAdress.avatar) }}" alt="{{ comment.produit.titre }}" class="img-fluid">
 						{% endif %}
 					</div>
 					<div class="commentAuthor">

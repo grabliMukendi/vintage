@@ -87,13 +87,14 @@
                                 <div class="card-title">{{ produit.titre }}</div>
                             </a>
                         </div>
-                        <div class="col-md-6 text-right">
+                        <div class="col-md-6 text-right price__rating__promo">
                             <div class="card-title price">
                                 {% if produit.promotion | length != null %}
                                 {% set prixTTC = produit.prix | tva(produit.tva.multiplicate) %}
 
                                 {{ prixTTC | promo( produit.promotion.remise) | price_format(produit.prix, ',', ' ') }}
-                                €</div>
+                                €
+                            </div>
                             {% else %}
                             {{ produit.prix | tva(produit.tva.multiplicate) | price_format(produit.prix, ',', ' ') }}
                             €
@@ -130,7 +131,7 @@
                     {% endfor %}
                 </div>
                 <div class="row card-body">
-                    <div class="col-md-6">
+                    <div class="col-md-6 plus__product">
                         <a href="{{ path('fiche_produit', { 'id' : produit.id, 'slug' : produit.slug }) }}" class="btn titleProduit">En
                             savoir+</a>
                     </div>
@@ -178,4 +179,15 @@
 </div>
 </div><!-- row -->
 
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        $(function () 
+        {
+            console.log(document.querySelector('.priceCateg'));
+        });
+
+    </script>
 {% endblock %}

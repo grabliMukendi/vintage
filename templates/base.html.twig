@@ -17,8 +17,13 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
 		<!-- Ico-moon Stylesheet -->
 		<link rel="stylesheet" href="{{ asset('css/icomoon/style.css') }}">
-		<!-- Personal Stylesheet -->
-		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+		<!-- Screen Stylesheet -->
+		<link rel="stylesheet" media="screen and (min-width: 992px)" href="{{ asset('css/style.css') }}">
+		<!-- Tablet CSS style -->
+		<link rel="stylesheet" media="(min-width: 768px) and (max-width:991.98px)" href="{{ asset('css/tablet.css') }}">
+		<!-- Mobile CSS style -->
+		<link rel="stylesheet" media="screen and (max-width:640px)" href="{{ asset('css/mobile.css') }}">
 
 		{{ encore_entry_script_tags('app') }}
 		
@@ -31,7 +36,12 @@
 	</head>
 	<body>
 		<header id="header__global">
-			<div class="top">
+			<div id="top__global" class="top">
+				<div id="burgerLine__mobile">
+					<div class="line1__mobile"></div>
+					<div class="line2__mobile"></div>
+					<div class="line3__mobile"></div>
+				</div>
 				<div class="profil_icon">
 					{% if app.user %}
 					{{ render(url('user_profile_name')) }}
@@ -91,12 +101,20 @@
 				</div>
 				<div class="navigator">
 					<div class="navigatorLeft">
-						<div class="query">
-							<form id="queryForm" action="{{ path('search_products') }}" method="post">
-								<input type="text" name="query" id="search" placeholder="Rechercher sur Vintage">
-							</form>
-							<i class="icon-magnifying-glass searchBtn"></i>
-							<div id="viewSearch"></div>
+						<span class="ico__form__mobile__js">
+							<i class="icon-magnifying-glass"></i>
+						</span>
+						<div class="query__block">
+							<div class="close__form__mobile text-right">
+								<i class="icon-cancel"></i>
+							</div>
+							<div class="query">
+								<form id="queryForm" action="{{ path('search_products') }}" method="post">
+									<input type="text" name="query" id="search" placeholder="Rechercher sur Vintage">
+								</form>
+								<i class="icon-magnifying-glass searchBtn"></i>
+								<div id="viewSearch"></div>
+							</div>
 						</div>
 					</div><!-- navigatorLeft -->
 	
@@ -109,7 +127,7 @@
 					<div class="navigatorRight">
 						<div class="who__global">
 							<i class="icon-conversation"></i>
-							<a href="">Qui sommes-nous</a>
+							<a href="{{ path('qui_sommes_nous') }}">Qui sommes-nous</a>
 						</div>
 						<div class="contact__global">
 							<i class="icon-send"></i>
@@ -117,6 +135,9 @@
 						</div>
 						<div class="cartIcon">
 							<a href="{{ path('cart_index') }}">
+								<div class="cart__screen">
+									<i class="icon-shopping-bag"></i>
+								</div>
 								<div class="panier__global">
 									<i class="icon-shopping-bag"></i>
 									Panier
@@ -130,24 +151,74 @@
 				<!-- navigator -->
 			</div><!-- top -->
 
-			<nav>
+			<nav id="nav__global">
 				<div class="container">
 					<ul class="navigation">
-						<li>
-							<a class="{{ (title == 'Acceuil') ? 'nav__active__global' : '' }}" href="{{ path('home') }}">Accueil</a>
-						</li>
-						<li>
-							<a class="{{ (title == 'Tendance') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_tendance') }}">Tendance</a>
-						</li>
-						<li>
-							<a class="{{ (title == 'Art déco') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_art_deco') }}">Art déco</a>
-						</li>
-						<li>
-							<a class="{{ (title == 'Automobile') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_automobile') }}">Automobile</a>
-						</li>
-						<li>
-							<a class="{{ (title == 'Sport et loisir') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_sport_loisir') }}">Sport & Loisir</a>
-						</li>
+						<div class="wrapper__mobile">
+							<li>
+								<a class="{{ (title == 'Acceuil') ? 'nav__active__global' : '' }}" href="{{ path('home') }}">Accueil</a>
+							</li>
+							<li>
+								<a class="{{ (title == 'Tendance') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_tendance') }}">Tendance</a>
+							</li>
+							<li>
+								<a class="{{ (title == 'Art déco') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_art_deco') }}">Art déco</a>
+							</li>
+							<li>
+								<a class="{{ (title == 'Automobile') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_automobile') }}">Automobile</a>
+							</li>
+							<li>
+								<a class="{{ (title == 'Sport et loisir') ? 'nav__active__global' : '' }}" href="{{ path('rubrique_sport_loisir') }}">Sport & Loisir</a>
+							</li>
+							<li id="open__profile__user__js">
+								<hr>
+								<div class="profil__mobile">
+									<ul>
+										{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+										<li>
+											<a href="{{ path('inscription') }}">Inscription</a>
+										</li>
+										<li>
+											<a href="{{ path('connexion') }}">Connexion</a>
+										</li>
+										{% else %}
+										<li class="role">
+											<i class="icon-user1"></i>
+											<strong>Membre</strong>
+										</li>
+										<li>
+											<a href="{{ path('user_profile') }}">
+												<i class="icon-profile"></i>
+												Mon Compte
+											</a>
+										</li>
+										<li>
+											<a href="{{ path('commandes_list') }}">
+												<i class="icon-choices"></i>
+												Mes commandes
+											</a>
+										</li>
+										{% endif %}
+										{% if is_granted('ROLE_ADMIN') %}
+										<hr>
+										<li class="role">
+											<a href="{{ path('dashboard') }}">
+												<i class="icon-business"></i>
+												Administration
+											</a>
+										</li>
+										{% endif %}
+										{% if app.user %}
+										<hr>
+										<li>
+											<a href="{{ path('deconnexion') }}">
+												<i class="icon-plug"></i>Déconnexion</a>
+										</li>
+										{% endif %}
+									</ul>
+								</div>
+							</li>
+						</div>
 					</ul>
 				</div>
 			</nav>
@@ -182,18 +253,31 @@
 					{% endfor %}
 
 					{% block content %}{% endblock %}
-
+					
 				</div>
+				
+				<div class="container content2">
+					{% block content2 %}{% endblock %}
+				</div>
+				
+				{% block contentFluidBottom %}{% endblock %}
+
 			{% endblock %}
 		</main>
 
 		<footer>
 			<div class="container pied">
 				<div>
-					<a href="">Conditions générales de vente</a>
+					<a href="{{ path('conditions_vente') }}">Conditions générales de vente</a>
 				</div>
 				<div>
-					<a href="">Mentions légales</a>
+					<a href="{{ path('mentions_legales') }}">Mentions légales</a>
+				</div>
+				<div class="link__hidden__screen">
+					<a href="{{ path('qui_sommes_nous') }}">Qui sommes-nous</a>
+				</div>
+				<div class="link__hidden__screen">
+					<a href="{{ path('contact') }}">Nous contacter</a>
 				</div>
 				<div class="socialMedia">
 					<span>Rejoignez-nous sur</span>
@@ -211,7 +295,9 @@
 					</a>
 				</div>
 				<div class="vintage">&copy;
-					{{ 'now' | date('Y') }}, Vintage.fr | Tous droits réservés.
+					{{ 'now' | date('Y') }}, Vintage.fr 
+					<span class="separate__vintage">|</span> 
+					<span>Tous droits réservés.</span>
 				</div>
 			</div>
 		</footer>

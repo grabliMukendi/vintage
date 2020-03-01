@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+{% set title = 'Conditions de vente' %}
+
+{% block content %}
+    {% if null != terms_of_sale %}
+    
+        {% for article in terms_of_sale %}
+        <h1 class="leadTitleLeft termsTitle">{{ (article.title) | upper }}</h1>
+        <div class="chapeauTerms mb-4">
+            {{ (article.chapeau) | raw }}
+        </div>
+        <ul class="contentTerms">
+            {% for key, content in article.contents %}
+                
+                <li>
+                    <div id="block_{{ key }}" class="row px-4 py-3 bg-light">
+                        <div class="col-10">
+                            {{ content.title }}
+                        </div>
+                        <div class="col-2 js__toggle__terms__content text-right"><img src="{{ asset('photo/plus.svg') }}" alt="plus" class="js__plus__toggle"></div>
+                        <div class="col-12 mt-4 js__terms__content__hidden">
+                            {{ content.contenu | raw }}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+        
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+        <script>
+            $(function() 
+            {
+                $('.js__toggle__terms__content').each((key, btn) => 
+                {
+                    $(btn).click(() => 
+                    {
+                        $(btn).children('.js__plus__toggle').attr('src', (index, attr) => 
+                        {
+                            return attr === '../../photo/moins_hover.svg' ? '../../photo/plus.svg' : '../../photo/moins_hover.svg';
+                        });
+
+                        let $sibling = $(btn).siblings('.js__terms__content__hidden');
+                        $sibling.stop().slideToggle('slow');
+                        
+                    });
+                });
+            });
+        </script>
+{% endblock %}

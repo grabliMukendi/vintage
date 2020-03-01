@@ -1,0 +1,129 @@
+{% extends "base.html.twig" %}
+
+{% set title = 'Qui sommes-nous ?' %}
+
+{% block contentFluid %}
+    <div class="container-fluid parallax__fluid py-4">
+        <br><br>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 pr-4 no__padding__mobile">
+                    <p>{{ qui_sommes_nous.chapeau | raw }}</p>
+                </div>
+                <div class="col-md-6 no__padding__mobile">
+                    <img src="{{ asset('photo/undraw_gift_box_byy3_2.svg') }}" alt="sale woman" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content2 %}
+    {% if null != qui_sommes_nous %}
+        <ul class="block__parallax__wrapper">
+            {#{ dump(qui_sommes_nous) }#}
+            <li>
+                <figure class="parallax__wrapper__fig">
+                    <div class="img__wrapper col-md-7">
+                        <span class="second__overlay">
+                            L'inspiration...
+                        </span>
+                        <div id="overlay__cible" class="img__overlay">
+                            <img src="{{ asset('photo/man-and-woman-smiling-inside-building-1367269.jpg/') }}" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                    <figcaption class="col-md-5">
+                        <h3>{{ qui_sommes_nous.contents[0].title }}</h3>
+                        <p>
+                            {{ qui_sommes_nous.contents[0].contenu | raw }}
+                        </p>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure class="parallax__wrapper__fig">
+                    <figcaption class="col-md-5">
+                        <h3>{{ qui_sommes_nous.contents[1].title }}</h3>
+                        <p>
+                            {{ qui_sommes_nous.contents[1].contenu | raw }}
+                        </p>
+                    </figcaption>
+                    <div class="img__wrapper col-md-7">
+                        <span class="second__overlay__right">
+                            Innovation
+                        </span>
+                        <div class="img__overlay__right__side">
+                            <img src="{{ asset('photo/top-view-of-people-at-the-meeting-3184287.jpg') }}" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </figure>
+            </li>
+        </ul>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block contentFluidBottom %}
+    <div class="container-fluid parallax__fluid2 pt-4">
+        <div class="row">
+
+            <div class="col-md-6 parallax__bottom__left">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('photo/mission.svg') }}" alt="mission globale" class="img-fluid">
+                    </div>
+                    <div class="col-md-10">
+                        <h3>{{ qui_sommes_nous.contents[3].title }}</h3>
+                        <p>
+                            {{ qui_sommes_nous.contents[3].contenu | raw }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 parallax__bottom__right">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{ asset('photo/pin.svg') }}" alt="L’équipe dirigeante de Vintage" class="img-fluid">
+                    </div>
+                    <div class="col-md-10">
+                        <h3>{{ qui_sommes_nous.contents[2].title }}</h3>
+                        <p>
+                            {{ qui_sommes_nous.contents[2].contenu | raw }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () 
+        {
+            if ($(window).width() > 992) 
+            {
+                function moveImgBlock() 
+                {
+                    let cible = $('#overlay__cible').offset().top - 200;
+                    //console.log(cible);
+    
+                    $(window).scroll(() => 
+                    {
+                        if($(this).scrollTop() > cible) 
+                        {
+                            $('.img__overlay__right__side').css('marginTop', '-130px');
+                        } 
+                        else 
+                        {
+                            $('.img__overlay__right__side').css('marginTop', '');
+                        }
+                    });
+                }
+                moveImgBlock();
+            }
+        });
+
+    </script>
+{% endblock %}

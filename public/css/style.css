@@ -1,3 +1,4 @@
+
 body 
 {
     font-family: 'Montserrat', sans-serif;
@@ -94,7 +95,7 @@ header {
     width: 100%;
     z-index: 9998;
 }
-#header__global {
+#top__global, #nav__global {
     background-color: #fff;
 }
 .top {
@@ -133,6 +134,12 @@ header {
 }
 .logotype {
     width: 176px;
+}
+.ico__form__mobile__js {
+    display: none;
+}
+#open__profile__user__js {
+    display: none;
 }
 .profil_icon {
     display: flex;
@@ -270,6 +277,9 @@ header {
 }
 #search:focus {
     outline: none !important;
+}
+.close__form__mobile {
+    display: none;
 }
 .searchBtn {
     margin-left: .5em;
@@ -450,18 +460,21 @@ header {
     cursor: pointer;
     transition: ease .5s;
 }
+.cart__screen {
+    display: none;
+}
 .panier__global:hover {
     background-color: #F76464;
     border: 1px solid #F76464;
     color: #fff;
 }
 .badgeCart {
-    min-width: 18px;
-    min-height: 18px;
-    line-height: 18px;
+    min-width: 22px;
+    min-height: 22px;
+    line-height: 22px;
     text-align: center;
     font-weight: 600;
-    font-size: .7em;
+    font-size: .65em;
     border-radius: 100%;
     color: #fff;
     position: absolute;
@@ -473,19 +486,22 @@ header {
 nav {
     box-shadow: 0 2px 3px rgb(205, 205, 205);
 }
-.navigation {
+.burgerLine__mobile {
+    display: none;
+}
+.wrapper__mobile {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
-.navigation li {
+.wrapper__mobile li {
    list-style: none;
    padding: 1em 1.35em;
    position: relative;
 }
-.navigation > li::before {
+.wrapper__mobile > li::before {
     position: absolute;
     content: '';
     bottom: 0;
@@ -497,7 +513,7 @@ nav {
     visibility: hidden;
 }
 @-moz-document url-prefix() { 
-    .navigation > li::before {
+    .wrapper__mobile > li::before {
         position: absolute;
         content: '';
         bottom: -2px;
@@ -509,11 +525,11 @@ nav {
         visibility: hidden;
     }
 }
-.navigation > li:hover::before 
+.wrapper__mobile > li:hover::before 
 {
     visibility: visible;
 }
-.navigation > li a {
+.wrapper__mobile > li a {
     text-decoration: none;
     color: inherit;
     font-weight: 500;
@@ -2258,6 +2274,148 @@ ul#produits-image-fields-list {
     padding-right: 2em;
 }
 /* errors */
+/* check__list__ico */
+.check__list__ico li {
+    position: relative;
+    list-style: none;
+}
+.check__list__ico li::before {
+    position: absolute;
+    content: url('../photo/check.svg');
+    width: 14px;
+    height: 14px;
+    top: 2px;
+    left: -24px;
+}
+/* check__list__ico */
+/* terms_of_sale */
+.termsTitle {
+    letter-spacing: 3px;
+    font-size: 30px;
+}
+.chapeauTerms {
+    margin-top: 4em;
+    font-size: .9em;
+}
+.contentTerms {
+    list-style: none;
+    padding-left: 0;
+}
+.contentTerms li {
+    margin-bottom: 2em;
+}
+.contentTerms li .row {
+    border-radius: 3px !important;
+}
+.contentTerms li .row .col-10, .chapeauTerms h3 {
+    font-size: 1.25em !important;
+    font-weight: 500;
+}
+.js__terms__content__hidden {
+    display: none;
+    font-size: 0.9em;
+}
+.js__plus__toggle {
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+}
+/* terms_of_sale */
+/* Qui sommes-nous */
+.parallax__fluid {
+    transform: translateY(-40px);
+    color: #6a7283;
+    background-color: #eee;
+}
+.parallax__fluid h1 {
+    font-size: 3em;
+    font-weight: bolder;
+}
+.parallax__fluid p {
+    font-size: 1.25em;
+    margin-top: 1em;
+}
+.block__parallax__wrapper {
+    list-style: none;
+}
+.parallax__wrapper__fig {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.block__parallax__wrapper figcaption h3 {
+    font-weight: 600;
+    font-size: 2.222vw;
+    line-height: 2.639vw;
+    margin-bottom: 1.389vw;
+}
+.block__parallax__wrapper figcaption p {
+    font-size: .9em;
+    line-height: 1.6;
+    margin-bottom: 1.389vw;
+}
+.img__wrapper {
+    position: relative;
+}
+.img__overlay {
+    width: 33.069vw;
+    height: auto;
+    border-radius: 10px !important;
+    margin: 26px 0 40px auto;
+    overflow: hidden !important;
+    isolation: isolate;
+}
+.img__overlay__right__side {
+    width: 33.069vw;
+    height: auto;
+    margin: -160px auto 0 0;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    isolation: isolate;
+    transition: ease-in-out 1s;
+}
+
+.second__overlay {
+    position: absolute;
+    top: -6.25vw;
+    left: -12.681vw;
+    color: #e6e6e6 !important;
+    font-size: 7.68vw;
+    font-weight: bolder;
+    line-height: 8.333vw;
+    transform: translate3d(0px, 40.496px, 0px);
+    mix-blend-mode: overlay;
+    z-index: 10;
+}
+.second__overlay__right {
+    position: absolute;
+    top: 1.25vw;
+    right: -9.228vw;
+    color: #e6e6e6 !important;
+    font-size: 6.68vw;
+    font-weight: bolder;
+    line-height: 8.333vw;
+    transform: translate3d(0px, 40.496px, 0px);
+    mix-blend-mode: overlay;
+    z-index: 10;
+}
+.parallax__bottom__left, .parallax__bottom__right {
+    padding: 2em;
+    color: #fff;
+}
+.parallax__bottom__left {
+    background-color: #F76464;
+}
+.parallax__bottom__right {
+    background-color: #00c29a;
+}
+/* Qui sommes-nous 
+    <blend-mode> = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity
+    @-moz-document url-prefix(){}
+*/
+.link__hidden__screen {
+    display: none;
+}
 
 
 
@@ -2318,3 +2476,9 @@ footer a:hover {
     color: #F76464;
 }
 
+/*
+    La propriété mix-blend-mode définit la façon dont le contenu d'un élément doit se mélanger avec le contenu de l'élément parent et avec son arrière-plan.
+
+    Syntaxe formelle
+    <blend-mode> = normal | multiply | screen | overlay | darken | lighten | color-dodge | color-burn | hard-light | soft-light | difference | exclusion | hue | saturation | color | luminosity
+*/
