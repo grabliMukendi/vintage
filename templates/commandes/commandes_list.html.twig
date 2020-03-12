@@ -15,7 +15,7 @@
             commandes <i class="fas fa-angle-down float-right angleDP"></i></a>
         <a class="{{ (title == 'Liste des factures') ? 'profileActiveLead' : '' }}" href="{{ path('factures_list') }}">Mes
             factures <i class="fas fa-angle-down float-right angleDP"></i></a>
-        <a class="{{ (title == 'Profile') ? 'profileActiveLead' : '' }}" href="{{ path('user_profile') }}">Mon Compte <i
+        <a id="show__my__count" class="{{ (title == 'Profile') ? 'profileActiveLead' : '' }}" href="{{ path('user_profile') }}">Mon Compte <i
                 class="fas fa-angle-down float-right angleDP"></i></a>
         <ul>
             <li><a href="{{ path('user_infos_perso') }}">Informations personnelles</a></li>
@@ -24,14 +24,14 @@
             <li><a href="{{ path('reset_password') }}">Mot de passe</a></li>
         </ul>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9 profileRight">
         <h1 class="headerOneColor">Liste de mes commandes</h1>
         <p class="mb-4 textMedium">Suivez étape par étape l'état d'avancement de vos commandes et vérifiez tous les détails concernant vos achats.</p>
         
         <h2 class="headerTwoProfile">LISTE DE MES COMMANDES</h2>
         <div class="infosPerso">
             {% if commandes | length != null %}
-                <table class="table commandeListTable">
+                <table class="table commandeListTable table-responsive">
                     <thead>
                         <tr class="trBorderless">
                             <th class="align-top text-center">#</th>

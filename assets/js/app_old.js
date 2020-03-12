@@ -774,7 +774,8 @@ $(function () {
             });
         }
         showSearchBar();
-    }
+
+    } // $(window).width() < 992
 
     /*window.addEventListener('scroll', function() {
         let scrolled = this.scrollY;

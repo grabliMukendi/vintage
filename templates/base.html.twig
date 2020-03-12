@@ -101,7 +101,7 @@
 				</div>
 				<div class="navigator">
 					<div class="navigatorLeft">
-						<span class="ico__form__mobile__js">
+						<span id="ico__form__mobile__js" class="ico__form__mobile__js">
 							<i class="icon-magnifying-glass"></i>
 						</span>
 						<div class="query__block">
@@ -354,6 +354,21 @@
 					});
 				}
 				contactWhoWeAre();
+
+				if ($(window).width() < 992) 
+				{
+					function showProfil() 
+					{
+						$('#show__my__count').click((e) => 
+						{
+							e.preventDefault();
+							$('.profileLeft ul').slideToggle('slow');
+							$('.fas .fa-angle-down').hide();
+						});
+					}
+					showProfil();
+				}
+
 
 			});
 

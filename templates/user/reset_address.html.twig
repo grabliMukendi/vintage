@@ -13,7 +13,7 @@
         <a class="{{ (title == 'Liste des factures') ? 'profileActiveLead' : '' }}"
             href="{{ path('factures_list') }}">Mes
             factures <i class="fas fa-angle-down float-right angleDP"></i></a>
-        <a class="{{ (title == 'Profile') ? 'profileActiveLead' : '' }}" href="{{ path('user_profile') }}">Mon Compte <i
+        <a id="show__my__count" class="{{ (title == 'Profile') ? 'profileActiveLead' : '' }}" href="{{ path('user_profile') }}">Mon Compte <i
                 class="fas fa-angle-down float-right angleDP"></i></a>
         <ul>
             <li><a href="{{ path('user_infos_perso') }}">Informations personnelles</a></li>
@@ -23,7 +23,7 @@
         </ul>
     </div>
 
-    <div class="col-md-9">
+    <div class="col-md-9 profileRight">
         <h1 class="headerOneColor">Mon Compte</h1>
         <p class="mb-4">Retrouvez et mettez à jour ici toutes vos informations personnelles.</p>
 

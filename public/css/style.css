@@ -1901,6 +1901,7 @@ ul#produits-image-fields-list {
     text-transform: uppercase;
     font-weight: bolder;
     letter-spacing: 1px;
+    margin-top: 0 !important;
 }
 .navbarDashboard__js i {
     font-size: 1.5em;
@@ -1927,8 +1928,17 @@ ul#produits-image-fields-list {
     top: 0;
     left: 0;
 }
+#dashboardNav__navigation {
+    padding: 1em;
+}
+.setting__nav__icon__screen, #setting__nav__icon__mobile {
+    display: none;
+}
 .gestion {
     padding-left: 1.5em;
+}
+.gestion .wrapper {
+    overflow-y: auto;
 }
 .gestion i::before {
     font-size: 24px !important;

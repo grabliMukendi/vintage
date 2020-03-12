@@ -22,8 +22,12 @@
     <link rel="stylesheet" href="{{ asset('css/icomoon/style.css') }}">
     <!-- Ico-moon_suite Stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/icomoon_suite/style.css') }}">
-    <!-- Personal Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <!-- Vintage screen CSS style -->
+    <link rel="stylesheet" media="screen and (min-width: 992px)" href="{{ asset('css/style.css') }}">
+    <!-- Vintage tablet CSS style -->
+    <link rel="stylesheet" media="(min-width: 768px) and (max-width:991.98px)" href="{{ asset('css/tablet.css') }}">
+    <!-- Vintage mobile CSS style -->
+    <link rel="stylesheet" media="screen and (max-width:767.98px)" href="{{ asset('css/mobile.css') }}">
     
     {{ encore_entry_script_tags('app') }}
     
@@ -57,68 +61,84 @@
     <div class="dashboard">
         <div class="navbarDashboard">
             <div class="dashboardNav">
-                <div class="settingDashboard">
-                    <div class="text-center">
-                        <img src="{{ asset('photo/logo_vintage.svg') }}" alt="Logo LCZ" width="160">
-                    </div>
-                    <hr>
-                    <div class="navbarDashboard__js align-middle mb-4 mt-4">
-                        <i class="icon-settings-1 mr-2"></i>Administration
-                    </div>
-                    <div class="gestion">
-                        <a class="{{ title == 'Tableau de bord' ? 'gestion__dash__active' : '' }}" href="{{ path('dashboard') }}">
-                            <i class="icon-analysis"></i>
-                            Tableau de bord
-                        </a>
-                        <a href="">
-                            <i class="icon-userEdit"></i>
-                            Gestion des membres
-                        </a>
-                        <a class="{{ title == 'Ajout et modification du produit' ? 'gestion__dash__active' : '' }}" href="{{ path('show_produits') }}">
-                            <i class="icon-box-1"></i>
-                            Gestion des produits
-                        </a>
-                        <a class="{{ title == 'Gestion des commandes' ? 'gestion__dash__active' : '' }}" href="{{ path('commandes_registered') }}">
-                            <i class="icon-box"></i>
-                            Gestion des commandes
-                        </a>
-                        <a href="">
-                            <i class="icon-conversation"></i>
-                            Gestion des commentaires
-                        </a>
-                        <a href="">
-                            <i class="icon-coupon"></i>
-                            Gestion des remises
-                        </a>
-                        <a class="{{ title == 'Ajout et modification des articles' ? 'gestion__dash__active' : '' }}"  href="{{ path('article_list') }}">
-                            <i class="icon-documents-set"></i>
-                            Gestion des articles
-                        </a>
-                    </div>
+                <div id="dashboardNav__navigation" class="text-center">
+                    <span id="setting__nav__icon__mobile">
+                        <i class="icon-settings-1"></i>
+                    </span>
+                    <a href="{{ path('home') }}">
+                        <img src="{{ asset('photo/logo_vintage.svg') }}" alt="Logo Vintage" width="160">
+                    </a>
                 </div>
-                <hr>
-                <div class="dash__ico__bottom">
-                    <div class="authentication__dashboard text-center">
-                        <i class="icon-bell1 notification__js"></i>
-    
-                        <span class="userDash__js">
-                            <div class="dash__user__profile text-center">
-                                <a href="{{ path('user_profile') }}">
-                                    <i class="icon-user1"></i>
-                                    Mon Compte
+
+                <div class="settingDashboard__dash__ico__bottom">
+                    <div class="settingDashboard">
+                        <div class="navbarDashboard__js align-middle mb-4 mt-4">
+                            <span class="setting__nav__icon__screen mr-3">
+                                <i class="icon-setting-lines"></i>
+                            </span>
+                            Gestion Administrateur
+                        </div>
+                        <div class="gestion">
+                            <div class="wrapper">
+                                <a class="{{ title == 'Tableau de bord' ? 'gestion__dash__active' : '' }}" href="{{ path('dashboard') }}">
+                                    <i class="icon-analysis"></i>
+                                    Tableau de bord
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="{{ path('deconnexion') }}"><i class="icon-turn-off"></i>
-                                    Déconnexion
+                                <a href="">
+                                    <i class="icon-userEdit"></i>
+                                    Gestion des membres
+                                </a>
+                                <a class="{{ title == 'Ajout et modification du produit' ? 'gestion__dash__active' : '' }}" href="{{ path('show_produits') }}">
+                                    <i class="icon-box-1"></i>
+                                    Gestion des produits
+                                </a>
+                                <a class="{{ title == 'Gestion des commandes' ? 'gestion__dash__active' : '' }}" href="{{ path('commandes_registered') }}">
+                                    <i class="icon-box"></i>
+                                    Gestion des commandes
+                                </a>
+                                <a href="">
+                                    <i class="icon-conversation"></i>
+                                    Gestion des commentaires
+                                </a>
+                                <a href="">
+                                    <i class="icon-coupon"></i>
+                                    Gestion des remises
+                                </a>
+                                <a class="{{ title == 'Ajout et modification des articles' ? 'gestion__dash__active' : '' }}"  href="{{ path('article_list') }}">
+                                    <i class="icon-documents-set"></i>
+                                    Gestion des articles
                                 </a>
                             </div>
-                            <i class="icon-users"></i>
-                        </span>
-    
-                        <i class="icon-magnifying-glass searchDash__js"></i>
-                        <a href="{{ path('home') }}">
-                            <i class="icon-house"></i>
-                        </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="dash__ico__bottom">
+                        <div class="authentication__dashboard text-center">
+                            <i class="icon-bell1 notification__js"></i>
+        
+                            <span class="userDash__js">
+                                <div class="dash__user__profile text-center">
+                                    <div class="dash__close__user__icon">
+                                        <div class="close__line1"></div>
+                                        <div class="close__line2"></div>
+                                    </div>
+                                    <a href="{{ path('user_profile') }}">
+                                        <i class="icon-user1"></i>
+                                        Mon Compte
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="{{ path('deconnexion') }}"><i class="icon-turn-off"></i>
+                                        Déconnexion
+                                    </a>
+                                </div>
+                                <i class="icon-users"></i>
+                            </span>
+        
+                            <i class="icon-magnifying-glass searchDash__js"></i>
+                            <a href="{{ path('home') }}">
+                                <i class="icon-house"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -138,7 +158,58 @@
     </div>
     
     
-    {% block javascripts %}{% endblock %}
+    {% block javascripts %}
+        <script>
+            $(function () {
+                $('#setting__nav__icon__mobile').click(() => {
+                    $('.settingDashboard__dash__ico__bottom').toggleClass('toggle__dash__ico__bottom');
+                    $('.navbarDashboard').toggleClass('toggle__navbarDashboard');
+                    $('.dashboardContent').toggleClass('toggle__dashboardContent');
+
+                });
+
+                if ($(window).width() < 992) {
+                    $(window).scroll(() => {
+                        if ($(this).scrollTop() > 120) {
+                            $('#dashboardNav__navigation').css(
+                                {
+                                    position: 'fixed',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                });
+                            $('.settingDashboard__dash__ico__bottom').css('top', '91.19px');
+                        }
+                        else {
+                            $('#dashboardNav__navigation').css(
+                                {
+                                    position: '',
+                                    top: '',
+                                    left: '',
+                                    width: '',
+                                });
+                            $('.settingDashboard__dash__ico__bottom').css('top', '');
+                        }
+                    });
+
+                    $('#icon__user__dash').click(() => {
+                        $('.dash__user__profile').css({
+                            opacity: 1,
+                            pointerEvents: 'all',
+                            transform: 'translateY(0)',
+                        });
+                    });
+                    $('.dash__close__user__icon').click(() => {
+                        $('.dash__user__profile').css({
+                            opacity: 0,
+                            pointerEvents: 'none',
+                            transform: 'translateY(-20px)',
+                        });
+                    });
+                }
+            });
+        </script>
+    {% endblock %}
 
 </body>
 </html>
