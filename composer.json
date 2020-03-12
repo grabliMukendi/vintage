@@ -10,7 +10,6 @@
         "friendsofsymfony/jsrouting-bundle": "^2.5",
         "fzaninotto/faker": "^1.9",
         "knplabs/knp-snappy-bundle": "^1.7",
-        "knplabs/knp-time-bundle": "^1.11",
         "sensio/framework-extra-bundle": "^5.5",
         "spipu/html2pdf": "^5.2",
         "symfony/apache-pack": "^1.0",
