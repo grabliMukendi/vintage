@@ -69,18 +69,6 @@ $(function () {
         $('.contact i').css('color', '');
     });
 
-    /************** Fin d'effet d'hover sur submenu ? **************/
-    $('#navigation li').each((key, value) => {
-        $(value).mouseover(() => {
-            link = $(value).children();
-            $(link).not(this).css('color', '');
-            $(link).css('color', '#fff');
-        });
-        $(value).mouseout(() => {
-            $(link).css('color', '');
-        });
-    });
-
     /************** Fin d'effet d'hover sur Qui sommes-nous et Contact ? **************/
 
     function showRecherche() 
