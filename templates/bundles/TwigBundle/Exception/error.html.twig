@@ -31,15 +31,18 @@
         
         {{ encore_entry_script_tags('app') }}
 
-        <title>Page d'erreur 404</title>
+        <title>Page d'erreur</title>
     </head>
 </head>
 
-<body class="errors404__body">
-    <div class="text-center error__content">
-        <h1 class="title mt-4">Erreur 404</h1>
-        <p class="mt-2 mb-4"><strong>Désolé !</strong><br> La page n'a pas été trouvée.</p>
+<body class="errors__body">
+    <div class="text-center error__content__500">
+        <h1 class="mt-4">Oops! Une erreur s'est produite</h1>
+        <h3 style="color:#00BFA6">Le serveur a renvoyé un "{{ status_code }} {{ status_text }}".</h3>
+        <p class="mt-2 mb-4">Quelque chose s'est mal passé.
+            Veuillez nous indiquer ce que vous faisiez lorsque cette erreur s'est produite. Nous le corrigerons dès que possible.</p>
         <a class="btn btnSuccess2" href="{{ path('home') }}">RETOUR À LA PAGE D'ACCUEIL</a>
     </div>
 </body>
+
 </html>

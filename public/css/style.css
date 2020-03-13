@@ -2250,6 +2250,13 @@ ul#produits-image-fields-list {
 }
 /* avatarModal */
 /* errors */
+.errors__body {
+    padding: 0;
+    margin: 0;
+    background: url('../photo/bgi_errors.jpg') no-repeat;
+    background-size: cover;
+    background-position-x: center;
+}
 .errors403__body {
     padding: 0;
     margin: 0;
@@ -2264,7 +2271,7 @@ ul#produits-image-fields-list {
     background-size: cover;
     background-position-x: center;
 }
-.error__content {
+.error__content, .error__content__500 {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -2274,14 +2281,17 @@ ul#produits-image-fields-list {
     padding-top: 10em;
     color: #fff;
 }
-.error__content h1 {
+.error__content h1, .error__content__500 h1 {
     letter-spacing: 1px;
 }
-.error__content p {
+.error__content p, .error__content__500 p {
     font-size: 1.65em;
     font-weight: 300;
 }
-.error__content a {
+.error__content p, .error__content__500 h3 {
+    font-size: 2em;
+}
+.error__content a, .error__content__500 a {
     letter-spacing: 1.35px;
     font-size: 0.85em;
     font-weight: 600 !important;
