@@ -72,8 +72,8 @@ class UserController extends AbstractController
             $manager->flush();
 
             //On déclenche l'eventDispatcher
-            $event = new GenericEvent($user);
-            $eventDispatcher->dispatch(Events::USER_PROFILE_UPDATED, $event);
+            //$event = new GenericEvent($user);
+            //$eventDispatcher->dispatch(Events::USER_PROFILE_UPDATED, $event);
 
             $this->addFlash('success', '<strong>' . $user->getPrenom() . '</strong>, vos informations personnelles ont été mis à jour avec succès.' );
             return $this->redirectToRoute('user_profile');
@@ -103,8 +103,8 @@ class UserController extends AbstractController
             $manager->flush();
 
             //On déclenche l'eventDispatcher
-            $event = new GenericEvent($user);
-            $eventDispatcher->dispatch(Events::USER_PROFILE_UPDATED, $event);
+            //$event = new GenericEvent($user);
+            //$eventDispatcher->dispatch(Events::USER_PROFILE_UPDATED, $event);
 
             $this->addFlash('success', '<strong>' . $user->getPrenom() . '</strong>, vos coordonnées ont été mis à jour avec succès.' );
             return $this->redirectToRoute('user_profile');
@@ -134,8 +134,8 @@ class UserController extends AbstractController
             $manager->flush();
             
             //On déclenche l'eventDispatcher
-            $event = new GenericEvent($user);
-            $eventDispatcher->dispatch(Events::USER_PROFILE_UPDATED, $event);
+            //$event = new GenericEvent($user);
+            //$eventDispatcher->dispatch(Events::USER_PROFILE_UPDATED, $event);
 
             $this->addFlash('success', '<strong>' . $user->getPrenom() . '</strong>, votre email a été mis à jour avec succès.' );
             return $this->redirectToRoute('user_profile');
@@ -173,8 +173,8 @@ class UserController extends AbstractController
                 $manager->flush();
 
                 //On déclenche l'eventDispatcher
-                $event = new GenericEvent($user);
-                $eventDispatcher->dispatch(Events::USER_PASSWORD_UPDATED, $event);
+                //$event = new GenericEvent($user);
+                //$eventDispatcher->dispatch(Events::USER_PASSWORD_UPDATED, $event);
 
                 $this->addFlash('success', '<strong>'. $user->getPrenom(). '</strong>, votre mot de passe à bien été changé !');
 
