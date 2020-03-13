@@ -9,6 +9,12 @@ main {
     min-height: calc(100vh - 150px - 56px);
 }
 
+/* Pour éviter le style apple sur les input */
+input[type=submit], input[type=text], select, textarea{
+    -webkit-appearance: none !important;
+    /*border-radius: 0 !important;*/
+}
+
 input, textarea, select, option, .card, .form-control {
     border-radius: 3px !important;
 }
