@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use Knp\Snappy\Pdf;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Commandes;
 use App\Services\Cart\CartService;
 use App\Repository\ProduitsRepository;
 use App\Repository\CommandesRepository;
-use App\Services\GeneratePdf\PdfService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserAdressesRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,17 +74,13 @@ class CommandesController extends AbstractController
     /**
      * @Route("/commandes/facture-pdf/{id}", name="commandes_facture_pdf")
      */
-    public function facturePDFAction($id, CommandesRepository $repo, Pdf $snappy) 
+    public function facturePDFAction($id, CommandesRepository $repo) 
     {
         $facture = $repo->findOneBy(
         [ 
             'user' => $this->getUser(), 
             'valider' => 1, 
             'id' => $id, 
-        ]);
-        
-        $content = $this->renderView('commandes/commande_pdf_facture.html.twig', [
-            'facture' => $facture,
         ]);
 
         if(!$facture) {
@@ -93,15 +89,33 @@ class CommandesController extends AbstractController
         }
         
         //Generate pdf with the retrieved HTML
-        return new Response($snappy->getOutputFromHtml($content), 200, 
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Courier');
+        
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('commandes/commande_pdf_facture.html.twig', 
         [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="export.pdf"',
-            'encoding' => 'utf-8',
-            'images' => true,
-            'dpi' => 300,
+            'facture' => $facture,
         ]);
-        //dd($facture);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream('facture_'.strtolower($facture->getUser()->getPrenom().'_'.$facture->getUser()->getNom()).'.pdf', 
+        [
+            'Attachment' => false,
+        ]);
 
     }
 
